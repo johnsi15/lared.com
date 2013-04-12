@@ -620,9 +620,9 @@
 
     public function actualizarNota($nota){
         $resultado = mysql_query("SELECT id FROM notas");
-
+          
         if($fila = mysql_fetch_row($resultado)){
-            mysql_query("UPDATE notas SET nota ='$nota' WHERE id='1'") 
+            mysql_query("UPDATE notas SET nota ='$nota' WHERE id='".$fila[0]."'") 
                              or die ("Error en el update");
         }else{
             mysql_query("INSERT INTO notas (nota) VALUES ('$nota')") 

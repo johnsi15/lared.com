@@ -109,7 +109,7 @@
 
    if(isset($_POST['notas'])){
       $nota = $_POST['nota'];
-      $objeto->actualizarNota($nota,$fecha);
+      $objeto->actualizarNota($nota);
       $objeto->verNota();
    }
 ?>
