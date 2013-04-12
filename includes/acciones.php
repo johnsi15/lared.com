@@ -6,6 +6,7 @@
    if(isset($_POST['clave'])){
         $user = $_POST['nombre'];
         $pass = $_POST['clave'];
+        $reco = $_POST['recordar'];
         if($objeto->login($user,$pass)){
             echo "Bien";
             //header('Location: ../menu.php');

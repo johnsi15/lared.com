@@ -85,6 +85,13 @@
       	header('Location: index.php');
       }
 	?>
+	
+	<header class="container">
+		<div class="hero-unit">
+			<br><br><br><br><br><br><br>
+		</div>
+	</header>
+
 	<!-- CUADRO DE NOTAS......-->
 	<div class="span3" id="recuadro" style="display: none;">
 		<form action="includes/acciones.php" method="post">
@@ -99,13 +106,6 @@
 		    </div>
 		</form>
 	</div>
-    
-
-	<header class="container">
-		<div class="hero-unit">
-			<br><br><br><br><br><br><br>
-		</div>
-	</header>
 	<article class="container well" id="fondo">
 		<div class="navbar" id="menu-contenedor">
 			<div class="navbar-inner" id="menu">

@@ -34,7 +34,6 @@
         if (isset($_SESSION['id_user'])){
             header('Location: menu.php');//si esta bien la session lo mandamos al menu principal...
         }else{
-            
         }    
     ?>
 	<header class="container">
@@ -62,8 +61,8 @@
 		    			</div>
 	    			</div>
 	    			<div class="control-group" id="form">
-	    				<div class="controls">
-	    				   <button type="submit" name="login" class="btn btn-primary">Iniciar</button>
+              <div class="controls">
+                 <button type="submit" name="login" class="btn btn-primary">Iniciar Sesión</button>
 	    				</div>
 	    			</div>
     			</form>
