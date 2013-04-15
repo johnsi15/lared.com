@@ -6,11 +6,12 @@
    if(isset($_POST['clave'])){
         $user = $_POST['nombre'];
         $pass = $_POST['clave'];
+		sleep(1);
         if($objeto->login($user,$pass)){
             echo "Bien";
             //header('Location: ../menu.php');
         }else{
-        	  echo "Error";
+        	echo "Error";
         }
    }
 

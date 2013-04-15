@@ -3,7 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Inicio</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap-responsive.css"> <!-- tener en cuenta el ancho de la pantalla actual 1200-->
+  <link rel="stylesheet" href="css/estilos.css">
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/ajaxInicio.js"></script>
@@ -13,17 +16,22 @@
 
        }
        #centrar{
-       	text-align: center;
+       	  text-align: center;
        }
        #fondo{
        	  background-color: white;
        }
        #form{
-       	 margin-left: 55px;
+       	  margin-left: 20%;
        }
        .hero-unit{
-       	   margin-top: 30px;
-       	   text-align: center;
+       	  margin-top: 30px;
+       	  text-align: center;
+       }
+       @media all and (max-width: 480px){ 
+           #form{
+               margin-left: 10%;
+           }
        }
     </style>
 <body>
@@ -51,18 +59,18 @@
 		    		<div class="control-group" id="form">
 		    			<label for="nombre" class="control-label">Nombre</label>
 		    			<div class="controls">
-		    			   <input type="text" name="nombre" placeholder="Usuario">
+		    			   <input type="text" name="nombre"  class="respon" placeholder="Usuario">
 		    			</div>
 		    		</div>
 		    		<div class="control-group" id="form">
 		    			<label for="clave" class="control-label">Password</label>
 		    			<div class="controls">
-		    				<input type="password" name="clave" placeholder="Contraseña">
+		    				<input type="password" name="clave" class="respon" placeholder="Contraseña">
 		    			</div>
 	    			</div>
 	    			<div class="control-group" id="form">
               <div class="controls">
-                 <button type="submit" name="login" class="btn btn-primary">Iniciar Sesión</button>
+                 <button type="submit" name="login" class="btn btn-primary" data-loading-text="Cargando...">Iniciar Sesión</button>
 	    				</div>
 	    			</div>
     			</form>

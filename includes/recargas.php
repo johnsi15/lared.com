@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="../css/estilos.css">
 	<script src="../js/jquery.js"></script>
 	<script src="../js/jquery.validate.js"></script>
-	<script src="../js/funciones.js"></script>
 	<script src="../js/bootstrap.js"></script>
+	<script src="../js/recargas.js"></script>
 </head>
 <body>
 	<style>
