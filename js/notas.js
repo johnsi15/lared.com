@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	///BUSCAMOS LOS CAMPOS EN TODAS LAS TABLAS-> cuando le den buscar
-	  var pet = $('.span3 form').attr('action');
+	    var pet = $('.span3 form').attr('action');
       var met = $('.span3 form').attr('method');
 
      $('.span3 form').submit(function(e){

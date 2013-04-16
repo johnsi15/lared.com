@@ -639,5 +639,52 @@
     }
 
 
+    public function verPrecios(){
+        $resultado = mysql_query("SELECT * FROM precios");
+
+        while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                         <td>'.$fila['nombre'].'</td>
+                         <td>'.$fila['precio'].'</td>
+                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                     </tr>';
+                          // echo $salida;
+        }      
+    }
+
+    public function registrarPrecio($nom,$pre){
+         mysql_query("INSERT INTO precios (nombre,precio) VALUES ('$nom','$pre')") 
+                       or die ("problemas en el inserte de Precios....".mysql_error());
+    }
+
+
+    public function modificarPrecio($cod,$nom,$pre){
+        $resultado = mysql_query("UPDATE precios SET nombre='$nom', precio='$pre' WHERE id='$cod'");
+        if($resultado){
+            return true;
+            echo "Bien";
+        }else{
+            return false;
+            echo "Error";
+        }
+    }
+
+    public function calcularReporte($fecha1,$fecha2,$tipo){
+        $resultado = mysql_query("SELECT sum(total) AS total FROM totalesdia WHERE fecha between'$fecha1' AND '$fecha2' AND tipo='$tipo'");
+        $fila = mysql_fetch_array($resultado);
+
+        if($fila['total']>0){
+           $salida = '<h3 class="well"> Calculo: $'.number_format($fila['total']).'</h3>';
+           echo $salida;
+           return true;
+        }else{
+            echo "Error";
+            return false;
+        }
+
+        
+    }
+
+
   }//cierre de la clase
 ?>

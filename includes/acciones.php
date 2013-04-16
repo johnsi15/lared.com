@@ -6,7 +6,7 @@
    if(isset($_POST['clave'])){
         $user = $_POST['nombre'];
         $pass = $_POST['clave'];
-		sleep(1);
+		//sleep(1);
         if($objeto->login($user,$pass)){
             echo "Bien";
             //header('Location: ../menu.php');
@@ -113,4 +113,30 @@
       $objeto->actualizarNota($nota);
       $objeto->verNota();
    }
+
+   if(isset($_POST['registrarPrecio'])){
+      $nom = $_POST['nombre'];
+      $pre = $_POST['dinero'];
+      $objeto->registrarPrecio($nom,$pre);
+      $objeto->verPrecios();
+   }
+
+   if(isset($_POST['editPrecio'])){
+      $nom = $_POST['nombre'];
+      $pre = $_POST['dinero'];
+      $cod = $_POST['id_registro'];
+      if($objeto->modificarPrecio($cod,$nom,$pre)){
+         $objeto->verPrecios();
+      }
+   }
+
+   if(isset($_POST['calcular'])){
+      $fecha1 = $_POST['fecha1'];
+      $fecha2 = $_POST['fecha2'];
+      $tipo = $_POST['tipo'];
+      if($objeto->calcularReporte($fecha1,$fecha2,$tipo)){
+
+      }
+   }
+
 ?>

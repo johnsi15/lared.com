@@ -82,15 +82,16 @@
 					<a href="../menu.php" class="brand">LaRed.Com</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li><a href="../menu.php">Home</a></li>
+							<li><a href="../menu.php"><i class="icon-home"></i>Home</a></li>
 							<li><a href="internet.php">Internet</a></li>
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li class="active"><a href="vitrina.php">Vitrina</a></li>
-							<li><a href="reporte.php">Reportes</a></li>
+							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Usuario - <?php echo $user; ?> <!--Mostramoe el user logeado -->
+									<i class="icon-user"></i> <?php echo $user; ?> <!--Mostramoe el user logeado -->
+								    <span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
 									<li><a href="cerrar.php">Cerrar Sesion</a></li>

@@ -8,9 +8,11 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js/buscar.js"></script>
-</head>
-<body>
+	<script src="../js/calcularReporte.js"></script>
 	<style>
+	    body{
+	    	font-family: "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+	    }
 		h1{
 			text-align: center;
 		}
@@ -27,6 +29,14 @@
 	    }
 		#fondo{
 			background: #feffff;
+		}
+		#fuente{
+			font-size: 23px;
+		}
+		#titulo{
+			text-align: center;
+			font-size: 32px;
+			color: #ba0d0d;
 		}
         .hero-unit{
         	margin-top: 30px;
@@ -59,6 +69,8 @@
       	header('Location: ../index.php');
       }
 	?>
+</head>
+<body>
 	<header class="container">
 		<div class="hero-unit">
 			<br><br><br><br><br><br><br>
@@ -77,15 +89,16 @@
 					<a href="../menu.php" class="brand">LaRed.Com</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li><a href="../menu.php">Home</a></li>
+							<li><a href="../menu.php"><i class="icon-home"></i>Home</a></li>
 							<li><a href="internet.php">Internet</a></li>
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
-							<li class="active"><a href="reporte.php">Reportes</a></li>
+							<li class="active"><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Usuario - <?php echo $user; ?> <!--Mostramoe el user logeado -->
+									<i class="icon-user"></i> <?php echo $user; ?> <!--Mostramoe el user logeado -->
+								    <span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
 									<li><a href="cerrar.php">Cerrar Sesion</a></li>
@@ -109,7 +122,7 @@
 						<option value="vitrina">Vitrina</option>
 					</select>
 					<label for="fecha">Fecha</label>
-					<input type="date" name="fecha" required>
+					<input type="date" name="fecha">
 					<input type="hidden" name="enviar">
 					<button type="submit" name="enviar" class="btn btn-success">Buscar</button>
 				</form>
@@ -146,6 +159,35 @@
 				</div>
 			</div>
 		</div>
+	</article>
+
+    <!-- Segundo articulo para ver totales de meses y dias-->
+	<article class="container well" id="fondo">
+		<p id="titulo">Suma de Reportes por Fecha</p><br>
+		<div class="row">
+			<div class="span3 well" id="fondo" style="margin-left: 60px;">
+				<form action="acciones.php" method="post">
+					<label for="tipo" id="fuente">Tipo</label>
+					<select name="tipo" id="tipo">
+						<option value="internet">Internet</option>
+						<option value="recarga">Recargas</option>
+						<option value="minutos">Minutos</option>
+						<option value="vitrina">Vitrina</option>
+					</select>
+					<label for="fecha" id="fuente">Fecha Inicial</label>
+					<input type="date" name="fecha1">
+					<label for="fecha2" id="fuente">Fecha Final</label>
+					<input type="date" name="fecha2">
+					<input type="hidden" name="calcular"><br><br>
+					<button type="submit" name="calcular" class="btn btn-success">Calcular</button>
+				</form>
+			</div>
+			<aside class="span1"></aside>
+			<div class="span6 well" id="resultado" style="background: #feffff;">
+				<h3 class="well"> Calculo: </h3>
+			</div>
+		</div>
+		<div id="mensajeCalculo"></div>
 	</article>
 
 	<footer class="container well">

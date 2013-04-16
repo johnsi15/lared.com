@@ -4,12 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Menu</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="css/estilos.css">
 	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/notas.js"></script>
-</head>
-<body>
+	<script src="js/registrarPrecios.js"></script>
 	<style>
 	    h1{
 	    	text-align: center;
@@ -29,7 +30,7 @@
 	    	/*resize: none;*/
 	    	font-size: 16px;
 	    	width: 250px;
-	    } 
+	    }
 	    #fondo{
 	    	background: #feffff;
 	    }
@@ -46,7 +47,7 @@
 	</style>
 
 	<script>
-      $(document).ready(function() {
+      $(document).ready(function(){
 		  var menu = $('#menu');
 		  var contenedor = $('#menu-contenedor');
 		  var menu_offset = menu.offset();
@@ -60,14 +61,15 @@
 		      menu.removeClass('menu-fijo');
 		    }
 		  });
-
+         /*_______________________________________________*/
 		  var cuadro = $('#recuadro');
 		  var cuadro_offset = cuadro.offset();
 		  // Cada vez que se haga scroll en la página
 		  // haremos un chequeo del estado del menú
 		  // y lo vamos a alternar entre 'fixed' y 'static'.
+		  var tamaño = 400;
 		  $(window).on('scroll', function() {
-		    if($(window).scrollTop() > cuadro_offset.top) {
+		    if($(window).scrollTop() > tamaño) {
 		      cuadro.addClass('notas');
 		      $("#recuadro").css("display", "block");
 		    } else {
@@ -75,6 +77,11 @@
 		      cuadro.removeClass('notas');
 		    }
 		  });
+         /*____________________________________________-*/
+         $('#boton').click(function(){
+         	 $("#recuadro").hide("slow");
+         	// alert("Bien");
+         });
 	  });
 	</script>
 	<?php
@@ -85,27 +92,15 @@
       	header('Location: index.php');
       }
 	?>
+</head>
+<body>
 	
 	<header class="container">
 		<div class="hero-unit">
 			<br><br><br><br><br><br><br>
 		</div>
 	</header>
-
-	<!-- CUADRO DE NOTAS......-->
-	<div class="span3" id="recuadro" style="display: none;">
-		<form action="includes/acciones.php" method="post">
-			<div class="control-group">
-			   	<label for="Notas"><strong>Notas:</strong></label>
-			   	<div class="controls"><!-- Tener en cuenta el texarea deja espacion si no se acomoda las llaves del php seguidas ok -->
-				    <textarea name="nota" id="foco" cols="0" rows="7" autofocus><?php require_once("includes/funciones.php"); $objeto = new funciones(); $objeto->verNota();
-				    ?></textarea>
-			   	</div>
-			   	<input type="hidden" name="notas">
-			    <button class="btn btn-inverse">Guardar</button>
-		    </div>
-		</form>
-	</div>
+    <!--Primer articulo... -->
 	<article class="container well" id="fondo">
 		<div class="navbar" id="menu-contenedor">
 			<div class="navbar-inner" id="menu">
@@ -118,15 +113,16 @@
 					<a href="menu.php" class="brand">LaRed.Com</a>
 					<div class="nav-collapse" >
 						<ul class="nav" >
-							<li class="active"><a href="menu.php">Home</a></li>
+							<li class="active"><a href="menu.php"><i class="icon-home"></i>Home</a></li>
 							<li><a href="includes/internet.php">Internet</a></li>
 							<li><a href="includes/recargas.php">Recargas</a></li>
 							<li><a href="includes/minutos.php">Minutos</a></li>
 							<li><a href="includes/vitrina.php">Vitrina</a></li>
-							<li><a href="includes/reporte.php">Reportes</a></li>
+							<li><a href="includes/reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Usuario - <?php echo $user; ?> <!--Mostramoe el user logeado -->
+									<i class="icon-user"></i> <?php echo $user; ?> <!--Mostramoe el user logeado -->
+								    <span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
 									<li><a href="includes/cerrar.php">Cerrar Sesion</a></li>
@@ -189,64 +185,103 @@
 				</table>
 			</div>
 		</div>
-		<hr>
+	</article>
+
+    <!-- CUADRO DE NOTAS......-->
+	<div class="span3" id="recuadro" style="display: none;">
+		<form action="includes/acciones.php" method="post">
+			<div class="control-group"> <!-- <ul id="boton" class="btn btn-inverse" style="margin-left: 230px;">X</ul> -->
+			   	<label for="Notas"><strong>Notas:</strong></label>
+			   	<div class="controls"><!-- Tener en cuenta el texarea deja espacion si no se acomoda las llaves del php seguidas ok -->
+				    <textarea name="nota" id="foco" cols="0" rows="7" autofocus><?php require_once("includes/funciones.php"); $objeto = new funciones(); $objeto->verNota();
+				    ?></textarea>
+			   	</div>
+			   	<input type="hidden" name="notas">
+			    <button class="btn btn-inverse">Guardar</button>
+		    </div>
+		</form>
+	</div>
+
+    <!-- Segundo articulo-->
+	<article class="container well" id="fondo">
 		<div class="row">
 			<div class="span2"></div>
-			<div class="span8 well" id="fondo">
+			<div class="span8">
 			    <aside><h1>Precios La Red.Com</h1></aside>
 				<table class="table table-hover table-bordered table-striped ">
 					<thead>
 						<tr>
 							<th>Concepto</th>
 							<th>Precio</th>
+							<th></th>
 						</tr>
 					</thead>
-					<tbody>
-				        <tr>
-				        	<td>Impresion ByN</td>
-				        	<td>$200</td>
-				        </tr>
-				         <tr>
-				        	<td>Impresion ByN mas de 10</td>
-				        	<td>$150</td>
-				        </tr>
-				        <tr>
-				        	<td>Impresion Color</td>
-				        	<td>$500</td>
-				        </tr>
-				        <tr>
-				        	<td>Impresion Color mas de 10</td>
-				        	<td>$300</td>
-				        </tr>
-				        <tr>
-				        	<td>Copias ByN</td>
-				        	<td>$100</td>
-				        </tr>
-				        <tr>
-				        	<td>Copias ByN mas de 20</td>
-				        	<td>$80</td>
-				        </tr>
-				        <tr>
-				        	<td>Copias Color</td>
-				        	<td>$200</td>
-				        </tr>
-				        <tr>
-				        	<td>Copias Color mas de 20</td>
-				        	<td>$150</td>
-				        </tr>
-				        <tr>
-				        	<td>Consultas</td>
-				        	<td>$300</td>
-				        </tr>
-				        <tr>
-				        	<td>Quema de Cd Dvd</td>
-				        	<td>$1000 o $2000</td>
-				        </tr>
+					<tbody id="result">
+				        <?php 
+				          require_once('includes/funciones.php');
+				          $objeto = new funciones();
+				          $objeto->verPrecios();
+				        ?>
 					</tbody>
 				</table>
+				 <div class="mensaje"></div>
+				<button id="registro" class="btn btn-success" style="margin-left: 540px;">Agregar</button>
 			</div>
 		</div>
 	</article>
+
+	<!--Codigo para registrar precio -->
+	<div class="hide" id="registrar" title="Guardar Precio">
+     	<form action="includes/acciones.php" method="post">
+     		<!-- <input type="hidden" id="id_registro" name="id_registro" value="0"> -->
+     		<div class="control-group">
+     			<label for="nombre" class="control-label">Concepto</label>
+     			<div class="controls">
+     				<input type="text" name="nombre" id="nombre" autofocus>
+     			</div>
+     		</div>
+     		<div class="control-group">
+     			<label for="dinero" class="control-label">Dinero</label>
+     			<div class="controls">
+     				<input type="text" name="dinero" id="dinero">
+     			</div>
+     		</div>
+     		<div class="control-group">
+     			<label for="gurdar" class="control-label"></label>
+     			<div class="controls">
+     				 <input type="hidden" name="registrarPrecio">
+     				<button type="submit" class="btn btn-success">Guardar</button>
+     			</div>
+     		</div>
+     	</form>
+     </div>
+
+     <!--Codigo para modificar precio -->
+     <div class="hide" id="editarRegistro" title="Editar Registro">
+     	<form action="includes/acciones.php" method="post">
+     		<input type="hidden" id="id_registro" name="id_registro" value="0">
+     		<div class="control-group">
+     			<label for="nombre" class="control-label">Concepto</label>
+     			<div class="controls">
+     				<input type="text" name="nombre" id="concepto" autofocus>
+     			</div>
+     		</div>
+     		<div class="control-group">
+     			<label for="dinero" class="control-label">Dinero</label>
+     			<div class="controls">
+     				<input type="text" name="dinero" id="precio">
+     			</div>
+     		</div>
+     		<div class="control-group">
+     			<label for="gurdar" class="control-label"></label>
+     			<div class="controls">
+     				 <input type="hidden" name="editPrecio">
+     				<button type="submit" class="btn btn-success">Modificar</button>
+     			</div>
+     		</div>
+     	</form>
+     </div>
+	
 
 	<footer class="container well">
 		<div class="span7">
