@@ -681,8 +681,50 @@
             echo "Error";
             return false;
         }
+    }
 
-        
+    public function cierreDia($fecha,$dinero,$dia){
+        mysql_query("INSERT INTO cierre (id,dinero,dia) VALUES ('$fecha','$dinero','$dia')") 
+                       or die ("Error");   
+    }
+
+    public function verCierres(){
+        $resultado = mysql_query("SELECT * FROM cierre");
+
+         while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                         <td>'.$fila['id'].'</td>
+                         <td>'.$fila['dia'].'</td>
+                         <td>'.$fila['dinero'].'</td>
+                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                     </tr>';
+                          // echo $salida;
+        }      
+    }
+
+    public function modificarCierre($dia,$dinero,$cod){
+         $resultado = mysql_query("UPDATE cierre SET dia='$dia', dinero='$dinero' WHERE id='$cod'");
+        if($resultado){
+            return true;
+            echo "Bien";
+        }else{
+            return false;
+            echo "Error";
+        }
+    }
+
+    public function calcularCierre($fecha1,$fecha2){
+        $resultado = mysql_query("SELECT sum(dinero) AS total FROM cierre WHERE id between '$fecha1' AND '$fecha2'");
+        $fila = mysql_fetch_array($resultado);
+
+        if($fila['total']>0){
+           $salida = '<h3 class="well"> Calculo: $'.number_format($fila['total']).'</h3>';
+           echo $salida;
+           return true;
+        }else{
+            echo "Error";
+            return false;
+        }
     }
 
 

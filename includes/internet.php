@@ -85,6 +85,7 @@
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
+							<li><a href="cierreDiario.php">Cierre Dia</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -195,7 +196,7 @@
 		   <h2><img src="../img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
 		</div>
 		<div class="span4"> <br>
-			<p>Lared.com Version 2.0</p>
+			<p>Lared.com Version 2.5</p>
 		</div>
 	</footer>
 </body>

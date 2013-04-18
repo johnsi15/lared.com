@@ -111,13 +111,14 @@
 						<span class="icon-bar"></span>
 					</a>
 					<a href="menu.php" class="brand">LaRed.Com</a>
-					<div class="nav-collapse" >
+					<div class="nav-collapse">
 						<ul class="nav" >
 							<li class="active"><a href="menu.php"><i class="icon-home"></i>Home</a></li>
 							<li><a href="includes/internet.php">Internet</a></li>
 							<li><a href="includes/recargas.php">Recargas</a></li>
 							<li><a href="includes/minutos.php">Minutos</a></li>
 							<li><a href="includes/vitrina.php">Vitrina</a></li>
+							<li><a href="includes/cierreDiario.php">Cierre Dia</a></li>
 							<li><a href="includes/reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -288,7 +289,7 @@
 		   <h2><img src="img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
 		</div>
 		<div class="span4"> <br>
-			<p>Lared.com Version 2.0</p>
+			<p>Lared.com Version 2.5</p>
 		</div>
 	</footer>
 </body>

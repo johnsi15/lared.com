@@ -139,4 +139,46 @@
       }
    }
 
+   if(isset($_POST['cierre'])){
+       date_default_timezone_set('America/Bogota');
+       $fecha = date("Y-m-d");
+       $dia = date("l");
+       if($dia=="Monday"){
+       $dia = "Lunes";
+       }else if($dia=="Tuesday"){
+       $dia = "Martes";
+       }else if($dia=="Wednesday"){
+       $dia = "Miercoles";
+       }else if($dia=="Thursday"){
+       $dia = "Jueves";
+       }else if($dia=="Friday"){
+       $dia = "Viernes";
+       }else if($dia=="Saturday"){
+       $dia = "Sabado";
+       }else if($dia=="Sunday"){
+       $dia = "Domingo";
+       }
+      $dinero = $_POST['dinero'];
+      $fecha = $_POST['fecha'];
+     // $dia = $_POST['dia'];
+      $objeto->cierreDia($fecha,$dinero,$dia);
+       $objeto->verCierres();
+   }
+
+   if(isset($_POST['editCierre'])){
+       $dia = $_POST['dia'];
+       $dinero = $_POST['dinero'];
+       $cod = $_POST['id_registro'];
+
+       if($objeto->modificarCierre($dia,$dinero,$cod)){
+         $objeto->verCierres();
+       }
+   }
+
+   if(isset($_POST['calcularCierre'])){
+      $fecha1 = $_POST['fecha1'];
+      $fecha2 = $_POST['fecha2'];
+      $objeto->calcularCierre($fecha1,$fecha2);
+   }
+
 ?>

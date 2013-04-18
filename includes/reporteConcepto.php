@@ -9,10 +9,7 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/modificar.js"></script>
-	<script src="../js/modificar2.js"></script>
 	<script src="../js/bootstrap.js"></script>
-</head>
-<body>
 	<style>
 		h1{
 			text-align: center;
@@ -62,6 +59,8 @@
 		  });
 	  });
 	</script>
+</head>
+<body>
 	<?php
       session_start();
       if(isset($_SESSION['id_user'])){
@@ -81,7 +80,7 @@
 	</header>
      <!-- Aca va el codigo del modal para modificar los datos-->
      <div class="hide" id="editarRegistro" title="Editar Registro">
-     	<form action="acciones.php" method="post" id="edit">
+     	<form action="acciones.php" method="post">
      		<input type="hidden" id="id_registro" name="id_registro" value="0">
      		<div class="control-group">
      			<label for="nombre" class="control-label">Nombre</label>
@@ -147,7 +146,7 @@
 		   <h2><img src="../img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
 		</div>
 		<div class="span4"> <br>
-			<p>Lared.com Version 2.0</p>
+			<p>Lared.com Version 2.5</p>
 		</div>
 	</footer>
 </body>
