@@ -689,8 +689,46 @@
     }
 
     public function verCierres(){
-        $resultado = mysql_query("SELECT * FROM cierre");
 
+         $cant_reg = 7;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+         $resultado = mysql_query("SELECT * FROM cierre ORDER BY id DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        
+         while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                         <td>'.$fila['id'].'</td>
+                         <td>'.$fila['dia'].'</td>
+                         <td>'.$fila['dinero'].'</td>
+                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                     </tr>';
+                          // echo $salida;
+        }      
+    }
+
+    public function refresCierre(){
+        $cant_reg = 7;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+        session_start();//iniciamos session para poder estrael los datos de la variable session ok.
+
+        if(isset($_SESSION['paginaCierre'])){///veridicaos si existe la variable session paginaActual ok.
+             $inicio = ($_SESSION['paginaCierre']-1)*$cant_reg; //sensillo pagina actula ejemplo 12-1 = 11 * 30 = 330. entonces inicia desdel 330 hasta el 30 osea 30 registro.
+        }
+
+         $resultado = mysql_query("SELECT * FROM cierre ORDER BY id DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        
          while($fila = mysql_fetch_array($resultado)){
                 echo '<tr> 
                          <td>'.$fila['id'].'</td>
@@ -725,6 +763,58 @@
             echo "Error";
             return false;
         }
+    }
+
+
+    public function paginacionCierre(){
+         $cant_reg = 7;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cierre");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+            echo '<div class="pagination">
+                    ';
+            if(($num_pag-1)>0){//preguntamos que si el numero de la pagina es mayor a cero ejemplo pagina 1-1 = 0 es > 0 no oasea que no hay paginas anteriores a esta ok.
+                echo "<ul><li> <a id='clic' href='cierreDiario.php?pagina=".($num_pag-1)."'> Prev </a></li></ul>";//mandamos el link de anterior si es el caso.
+                echo "<ul><li> <a id='clic'href='cierreDiario.php?pagina=1'> ... </a></li></ul>";//mandamos el link de anterior si es el caso.
+            }
+            for($i=1; $i<=$total_paginas; $i++){//vamos listando todas las paginas.
+                if($num_pag==$i){//preguntamos si el numero de la pagina es = a la variable $i para imprimirla pero desabilitada.
+                     echo "<ul> <li class='disabled'><a href='#'>".$num_pag."</a></li></ul>";
+                     $_SESSION['paginaCierre']=$num_pag;
+                }else{ //si no imprimimos el numero de la pagina siguiente. 
+                   if($i<=10){
+                        if($num_pag>=10){
+                        }else{
+                               echo "<ul> <li> <a  id='clic' href='cierreDiario.php?pagina=$i'> $i </a></li></ul>";
+                        }
+                    }else{
+                        if($num_pag>=10){
+                            echo "<ul> <li> <a  id='clic' href='cierreDiario.php?pagina=$i'> $i </a></li></ul>";
+                        }
+                    }
+                }
+            }
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                echo "<ul><li> <a href='cierreDiario.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;'
+                </div>';
     }
 
 

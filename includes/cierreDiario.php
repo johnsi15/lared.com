@@ -61,6 +61,10 @@
 		    }
 		    $('#foco').focus();
 		  });
+
+		  $('#clic').click(function(){
+		  	  
+		  });
 	  });
 	</script>
 	<?php
@@ -71,6 +75,7 @@
       	header('Location: ../index.php');
       }
 	?>
+	
 	<header class="container">
 		<div class="hero-unit">
 			<p class="page-header">
@@ -113,10 +118,10 @@
 			</div>
 		</div>
          <h1>Cierre del Dia </h1><br><br>
-		<div class="tabbale tabs-left">
+		<div class="tabbale tabs-left well" id="fondo">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#tab1" data-toggle="tab"> <strong>Hacer Cierre</strong></a></li>
-				<li><a href="#tab2" data-toggle="tab"><strong>Ver Cierres</strong></a></li>
+				<li id="1" class="active"><a href="#tab1" data-toggle="tab"> <strong>Hacer Cierre</strong></a></li>
+				<li id="2"><a href="#tab2" data-toggle="tab"><strong>Ver Cierres</strong></a></li>
 				<li><a href="#tab3" data-toggle="tab"><strong>Calcular Cierres</strong></a></li>
 			</ul>
 			<div class="tab-content">
@@ -157,10 +162,18 @@
 							<button type="submit" name="cierre" class="btn btn-inverse">Hacer Cierre</button>
 						</form>
 					</div>
-					<div class="span6">
+					<div class="span5">
+						<ul class="thumbnails" style="margin-left: 15px;">
+		    				<li class="span5">
+		    					<a href="#" class="thumbnail">
+		    			           <img src="../img/Tarjeta_mario3.png" alt="Tarjeta">
+		    					</a>
+		    				</li>
+    					</ul>
 						<div id="mensaje"></div>
 					</div>
 				</div>
+				<!-- Seccion numero Dos-->
 				<div class="tab-pane" id="tab2">
 					<div class="span5">
 						 <table class="table table-hover table-bordered">
@@ -178,6 +191,13 @@
 						 		  $objeto->verCierres();
 						 		?>
 						 	</tbody>
+                             <div>
+							 	<?php
+							 		  require_once('funciones.php');
+							 		  $objeto = new funciones();
+							 		  $objeto->paginacionCierre();
+							 	?>
+							 </div>
 						 </table>
 					</div>
 					<div class="span4">
@@ -210,6 +230,7 @@
 					</div>
 				</div>
 
+                <!-- Seccion numero Tres-->
                 <div class="tab-pane" id="tab3">
                 	<div class="span3 well" id="calculo" style="background: #feffff;">
 						<form action="acciones.php" method="post">
@@ -239,5 +260,34 @@
 			<p>Lared.com Version 2.5</p>
 		</div>
 	</footer>
+
+	<?php 
+	   $numPag = $_SESSION['paginaCierre'];
+	   	echo "numero de pagina ".$numPag;
+	   if($numPag>=2){
+	   	echo "poraca paso";
+    ?><script>
+    	$(document).ready(function(){
+    		$('#tab1').removeClass('tab-pane active');
+		  	$('#tab2').addClass('tab-pane active');
+		  	$('#tab1').addClass('tab-pane');
+		  	$('#1').removeClass('active');
+		  	$('#2').addClass('active');
+    	});
+    </script>
+    <?php
+	   }else{
+	 ?><script>
+	 	$(document).ready(function(){
+    		$('#tab2').removeClass('tab-pane active');
+		  	$('#tab1').addClass('tab-pane active');
+		  	$('#tab2').addClass('tab-pane');
+		  	$('#2').removeClass('active');
+		  	$('#1').addClass('active');
+    	});
+	 </script>
+	 <?php
+	   }
+	?>
 </body>
 </html>

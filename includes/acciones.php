@@ -171,7 +171,7 @@
        $cod = $_POST['id_registro'];
 
        if($objeto->modificarCierre($dia,$dinero,$cod)){
-         $objeto->verCierres();
+         $objeto->refresCierre();
        }
    }
 
