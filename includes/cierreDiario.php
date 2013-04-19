@@ -263,9 +263,7 @@
 
 	<?php 
 	   $numPag = $_SESSION['paginaCierre'];
-	   	echo "numero de pagina ".$numPag;
 	   if($numPag>=2){
-	   	echo "poraca paso";
     ?><script>
     	$(document).ready(function(){
     		$('#tab1').removeClass('tab-pane active');
