@@ -20,7 +20,7 @@
         $tipoB = $_POST['tipoBase'];
         date_default_timezone_set('America/Bogota'); 
         $fecha = date("Y-m-d");
-        $objeto->registrarBase($base,$fecha,$tipoB);
+        $objeto->actualizarBase($fecha,$base,$tipoB);
         header('Location: internet.php');
    }
 
@@ -42,7 +42,7 @@
         $tipoB = $_POST['tipoBase'];
         date_default_timezone_set('America/Bogota'); 
         $fecha = date("Y-m-d");
-        $objeto->registrarBase($base,$fecha,$tipoB);
+        $objeto->actualizarBase($fecha,$base,$tipoB);
         header('Location: recargas.php');
    }
 
@@ -60,7 +60,7 @@
        $tipoB = $_POST['tipoBase'];
        date_default_timezone_set('America/Bogota');
        $fecha = date("Y-m-d");
-       $objeto->registrarBase($base,$fecha,$tipoB);
+       $objeto->actualizarBase($fecha,$base,$tipoB);
        header('Location: minutos.php');
    }
 
@@ -78,7 +78,7 @@
        $tipoB = $_POST['tipoBase'];
        date_default_timezone_set('America/Bogota');
        $fecha = date("Y-m-d");
-       $objeto->registrarBase($base,$fecha,$tipoB);
+       $objeto->actualizarBase($fecha,$base,$tipoB);
        header('Location: vitrina.php');
    }
 

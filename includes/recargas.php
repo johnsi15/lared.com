@@ -92,8 +92,8 @@
                	?>
                     <script>
 				       $(document).ready(function(){
-				              $("#campo",this).attr("disabled","disabled");
-				              $("#campo2",this).attr("disabled","disabled");
+				              //$("#campo",this).attr("disabled","disabled");
+				              //$("#campo2",this).attr("disabled","disabled");
 				       });
 				    </script>
                	<?php
@@ -108,7 +108,7 @@
                }
 			?>
 			<div class="span8">
-			         <a href="#mimodal" role="button" class="btn btn-primary btn-large" data-toggle="modal">Base del Dia</a>
+			         <a href="#mimodal" role="button" class="btn btn-primary btn-large" data-toggle="modal">Actualizar Base</a>
 					 <div id="mimodal" class="modal hide fade">
 					 	<div class="modal-header">
 					 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
@@ -184,7 +184,7 @@
 		   <h2><img src="../img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
 		</div>
 		<div class="span4"> <br>
-			<p>Lared.com Version 2.5</p>
+			<p>Lared.com Version 3.0</p>
 		</div>
 	</footer>
 </body>

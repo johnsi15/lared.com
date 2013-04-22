@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Inicio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="LaRed.Com">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/bootstrap-responsive.css"> <!-- tener en cuenta el ancho de la pantalla actual 1200-->
   <link rel="stylesheet" href="css/estilos.css">

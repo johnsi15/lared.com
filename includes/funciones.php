@@ -23,32 +23,13 @@
          }
     }
 
-    public function registrarBase($base,$fecha,$tipoB){
-          date_default_timezone_set('America/Bogota');
-          $fecha = date("Y-m-d");
+    public function actualizarBase($fecha,$base,$tipo){
+            mysql_query("UPDATE bases SET baseDia ='$base' WHERE tipoBase='$tipo'") 
+                or die ("Error en el update de Base...");
 
-          $resultado = mysql_query("INSERT INTO binternet (baseDia,fecha,tipoBase) VALUES ('$base','$fecha','$tipoB')") 
-                       or die ("problemas en el inserte de base internet".mysql_error());
-                       if($tipoB=='internet'){
-                           mysql_query("UPDATE totalesdia SET base ='$base' WHERE tipo='internet' AND fecha='$fecha'") 
-                                    or die ("Error en el update");
-                       }else{
-                         if($tipoB=='recarga'){
-                              mysql_query("UPDATE totalesdia SET base ='$base' WHERE tipo='recarga' AND fecha='$fecha'") 
-                                    or die ("Error en el update");
-                         }else{
-                            if($tipoB=='minutos'){
-                                 mysql_query("UPDATE totalesdia SET base ='$base' WHERE tipo='minutos' AND fecha='$fecha'") 
-                                    or die ("Error en el update");
-                            }else{
-                                if($tipoB=='vitrina'){
-                                    mysql_query("UPDATE totalesdia SET base ='$base' WHERE tipo='vitrina' AND fecha='$fecha'") 
-                                                 or die ("Error en el update");
-                                }
-                            }
-                         }
-                       }
-          
+            mysql_query("UPDATE totalesdia SET base ='$base' WHERE tipo='$tipo' AND fecha='$fecha'") 
+                or die ("Error en el update totalesdia Base");
+
     }
 
     public function registrarConcepto($nom,$dinero,$tipoCon){
@@ -62,18 +43,14 @@
         date_default_timezone_set('America/Bogota'); 
         $fecha = date("Y-m-d");
              
-        $resultado = mysql_query("SELECT * FROM binternet WHERE fecha='$fecha' AND tipoBase='internet'");
+        $resultado = mysql_query("SELECT baseDia,fecha FROM bases WHERE tipoBase='internet'");
         if($fila=mysql_fetch_array($resultado)){
-                 if($fecha == $fila['fecha']){
                    $salida = '<h1> Base del dia es: $'.number_format($fila['baseDia']).' - Fecha: '.$fila['fecha'].'</h1>';           
                    echo $salida;
                    return true;
-                }else{
-                    $salida ="<h1> Base del Dia: $0 </h1>";
-                    echo $salida;
-                    return false;
-                }
         }else{
+            mysql_query("INSERT INTO bases (baseDia,fecha,tipoBase) VALUES ('0','$fecha','internet')") 
+                   or die ("problemas en el inserte de base internet".mysql_error());
             $salida ="<h1> Base del Dia: $0  del  ".$fecha." </h1>";
             echo $salida;
             return false;
@@ -84,18 +61,14 @@
         date_default_timezone_set('America/Bogota'); 
         $fecha = date("Y-m-d");
              
-        $resultado = mysql_query("SELECT * FROM binternet WHERE fecha='$fecha' AND tipoBase='recarga'");
+        $resultado = mysql_query("SELECT baseDia,fecha FROM bases WHERE tipoBase='recarga'");
         if($fila=mysql_fetch_array($resultado)){
-                 if($fecha == $fila['fecha']){
                    $salida = '<h1> Base del dia es: $'.number_format($fila['baseDia']).' - Fecha: '.$fila['fecha'].'</h1>';           
                    echo $salida;
                    return true;
-                }else{
-                    $salida ="<h1> Base del Dia: $0 </h1>";
-                    echo $salida;
-                    return false;
-                }
         }else{
+            mysql_query("INSERT INTO bases (baseDia,fecha,tipoBase) VALUES ('0','$fecha','recarga')") 
+                   or die ("problemas en el inserte de base recarga".mysql_error());
             $salida ="<h1> Base del Dia: $0  del ".$fecha." </h1>";
             echo $salida;
             return false;
@@ -106,18 +79,14 @@
         date_default_timezone_set('America/Bogota');
         $fecha = date("Y-m-d");
 
-        $resultado = mysql_query("SELECT * FROM binternet WHERE fecha='$fecha' AND tipoBase='minutos'");
+        $resultado = mysql_query("SELECT baseDia,fecha FROM bases WHERE tipoBase='minutos'");
         if($fila = mysql_fetch_array($resultado)){
-            if($fecha == $fila['fecha']){
                 $salida = '<h1> Base del dia es: $'.number_format($fila['baseDia']).' - Fecha: '.$fila['fecha'].'</h1>';
                 echo $salida;
                 return true;
-            }else{
-                $salida = '<h1> Base del Dia: $0 </h1>';
-                echo $salida;
-                return false;
-            }
         }else{
+            mysql_query("INSERT INTO bases (baseDia,fecha,tipoBase) VALUES ('0','$fecha','minutos')") 
+                   or die ("problemas en el inserte de base minutos".mysql_error());
             $salida = '<h1> Base del Dia: $0  del  '.$fecha.'</h1>';
             echo $salida;
             return false;
@@ -128,18 +97,14 @@
         date_default_timezone_set('America/Bogota');
         $fecha = date("Y-m-d");
 
-        $resultado = mysql_query("SELECT * FROM binternet WHERE fecha='$fecha' AND tipoBase='vitrina'");
+        $resultado = mysql_query("SELECT baseDia,fecha FROM bases WHERE tipoBase='vitrina'");
         if($fila = mysql_fetch_array($resultado)){
-            if($fecha == $fila['fecha']){
                 $salida = '<h1> Base del dia es: $'.number_format($fila['baseDia']).' - Fecha: '.$fila['fecha'].'</h1>';
                 echo $salida;
                 return true;
-            }else{
-                $salida = '<h1> Base del Dia: $0 </h1>';
-                echo $salida;
-                return false;
-            }
         }else{
+            mysql_query("INSERT INTO bases (baseDia,fecha,tipoBase) VALUES ('0','$fecha','vitrina')") 
+                   or die ("problemas en el inserte de base vitrina".mysql_error());
             $salida = '<h1> Base del Dia: $0  del  '.$fecha.'</h1>';
             echo $salida;
             return false;
@@ -174,7 +139,10 @@
                                     or die ("Error en el update");
         }else{
             $totalInternet=0;
-            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalInternet','0','internet','$fecha')")
+            $r = mysql_query("SELECT baseDia FROM bases WHERE tipoBase='internet'");
+            $fila = mysql_fetch_array($r);
+            $base = $fila['baseDia'];
+            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalInternet','$base','internet','$fecha')")
                                     or die ("problemas en insert de totales dia...");
         }   
     }
@@ -205,7 +173,10 @@
                                     or die ("Error en el update");
         }else{
             $totalRecargas=0;
-            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalRecargas','0','recarga','$fecha')")
+            $r = mysql_query("SELECT baseDia FROM bases WHERE tipoBase='recarga'");
+            $fila = mysql_fetch_array($r);
+            $base = $fila['baseDia'];
+            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalRecargas','$base','recarga','$fecha')")
                                     or die ("problemas en insert de totales dia...");
         }   
     }
@@ -237,7 +208,10 @@
                                    
         }else{
             $totalMinutos=0;
-            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalMinutos','0','minutos','$fecha')")
+            $r = mysql_query("SELECT baseDia FROM bases WHERE tipoBase='minutos'");
+            $fila = mysql_fetch_array($r);
+            $base = $fila['baseDia'];
+            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalMinutos','$base','minutos','$fecha')")
                                     or die ("problemas en insert de totales dia porque...");
         }   
     }
@@ -268,7 +242,10 @@
                                     or die ("Error en el update");
         }else{
             $totalVitrina=0;
-            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalVitrina','0','vitrina','$fecha')")
+            $r = mysql_query("SELECT baseDia FROM bases WHERE tipoBase='vitrina'");
+            $fila = mysql_fetch_array($r);
+            $base = $fila['baseDia'];
+            mysql_query("INSERT INTO totalesdia (total,base,tipo,fecha) VALUES ('$totalVitrina','$base','vitrina','$fecha')")
                                     or die ("problemas en insert de totales dia...");
         }   
     }
