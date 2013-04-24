@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Cierre del Dia</title>
+	<title>Gastos</title>
 	<link rel="stylesheet" href="../css/bootstrap.css">
 	<link rel="stylesheet" href="../css/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="../css/estilos.css">
@@ -10,8 +10,8 @@
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/jquery.validate.js"></script>
 	<script src="../js/funciones.js"></script>
-	<script src="../js/editarCierre.js"></script>
-	<script src="../js/calcularCierre.js"></script>
+	<script src="../js/editarGasto.js"></script>
+	<script src="../js/calcularGasto.js"></script>
 	<script src="../js/bootstrap.js"></script>
 </head>
 <body>
@@ -60,7 +60,11 @@
 		      menu.removeClass('menu-fijo');
 		    }
 		    $('#foco').focus();
-		  });  	 
+		  });
+
+		  $('#clic').click(function(){
+
+		  });
 	  });
 	</script>
 	<?php
@@ -75,7 +79,7 @@
 	<header class="container">
 		<div class="hero-unit">
 			<p class="page-header">
-			    <h1>Cierre del Dia - La Red.Com</h1>
+			    <h1>Gastos - La Red.Com</h1>
 		    </p>
 		</div>
 	</header>
@@ -97,8 +101,8 @@
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
-							<li class="active"><a href="cierreDiario.php">Cierre Dia</a></li>
-							<li><a href="gastos.php">Gastos</a></li>
+							<li><a href="cierreDiario.php">Cierre Dia</a></li>
+							<li class="active"><a href="gastos.php">Gastos</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -114,12 +118,12 @@
 				</div>
 			</div>
 		</div>
-         <h1>Cierre del Dia </h1><br><br>
+         <h1>Gastos </h1><br><br>
 		<div class="tabbale tabs-left well" id="fondo">
 			<ul class="nav nav-tabs">
-				<li  class="active"><a href="#tab1" data-toggle="tab" id="clic"> <strong>Hacer Cierre</strong></a></li>
-				<li><a href="#tab2" data-toggle="tab"><strong>Ver Cierres</strong></a></li>
-				<li><a href="#tab3" data-toggle="tab"><strong>Calcular Cierres</strong></a></li>
+				<li class="active"><a href="#tab1" data-toggle="tab" id="clic"> <strong>HACER GASTOS</strong></a></li>
+				<li><a href="#tab2" data-toggle="tab"><strong>VER GASTOS</strong></a></li>
+				<li><a href="#tab3" data-toggle="tab"><strong>CALCULAR GASTOS</strong></a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab1">
@@ -150,13 +154,17 @@
                                            	$dia = "Domingo";
                                            }
                                            echo $fecha;?><br><br>
-						<form action="acciones.php" method="post" id="cierre" class="limpiar">
-							<label for="dinero">Dinero</label>
+						<form action="acciones.php" method="post" id="gasto" class="limpiar">
+							<label for="dinero">Gasto</label>
 							<input type="text" name="dinero" id="foco" required autofocus>
-							<label for="fecha">Fecha</label>
-							<input type="date" name="fecha">
-							<input type="hidden" name="cierre"><br>
-							<button type="submit" name="cierre" class="btn btn-inverse">Hacer Cierre</button>
+							<label for="tipoGasto">Tipo de Gasto</label>
+							<select name="tipoGasto" id="tgasto">
+								<option value="Servicio Publico">Servicio Publico</option>
+								<option value="Pago de Nomina">Pago de Nomina</option>
+								<option value="Otros">Otros</option>
+							</select>
+							<input type="hidden" name="gasto"><br><br>
+							<button type="submit" class="btn btn-inverse">Guardar Gasto</button>
 						</form>
 					</div>
 					<div class="span5">
@@ -172,27 +180,29 @@
 				</div>
 				<!-- Seccion numero Dos-->
 				<div class="tab-pane" id="tab2">
-					<div class="span5">
+					<div class="span6">
 						 <table class="table table-hover table-bordered">
 						 	<thead>
 						 		<tr>
+						 			<th>Gasto</th>
+						 			<th>Tipo Gasto</th>
 						 			<th>Fecha</th>
-						 			<th>Dia</th>
-						 			<th>Dinero</th>
 						 		</tr>
 						 	</thead>
 						 	<tbody id="resul">
 						 		<?php
 						 		  require_once('funciones.php');
 						 		  $objeto = new funciones();
-						 		  $objeto->verCierres();
+						 		  $objeto->verGastos();
 						 		?>
 						 	</tbody>
                              <div>
 							 	<?php
+							 	    /*
 							 		  require_once('funciones.php');
 							 		  $objeto = new funciones();
 							 		  $objeto->paginacionCierre();
+							 		  */
 							 	?>
 							 </div>
 						 </table>
@@ -200,25 +210,29 @@
 					<div class="span4">
 						<div class="mensaje"></div>
   					<!-- Aca va el codigo del modal para modificar los datos-->
-						<div class="hide" id="formulario" title="Editar Cierre">
+						<div class="hide" id="formulario" title="Editar Gasto">
 							<form action="acciones.php" method="post">
 					     		<input type="hidden" id="id_registro" name="id_registro" value="0">
 					     		<div class="control-group">
-					     			<label for="nombre" class="control-label">Dia</label>
-					     			<div class="controls">
-					     				<input type="text" name="dia" id="dia">
-					     			</div>
-					     		</div>
-					     		<div class="control-group">
-					     			<label for="dinero" class="control-label">Dinero</label>
+					     			<label for="nombre" class="control-label">Gasto</label>
 					     			<div class="controls">
 					     				<input type="text" name="dinero" id="dinero">
 					     			</div>
 					     		</div>
 					     		<div class="control-group">
+					     			<label for="dinero" class="control-label">Tipo Gasto</label>
+					     			<div class="controls">
+					     				<select name="tipoGasto" id="tgasto">
+											<option value="Servicio Publico">Servicio Publico</option>
+											<option value="Pago de Nomina">Pago de Nomina</option>
+											<option value="Otros">Otros</option>
+										</select>
+					     			</div>
+					     		</div>
+					     		<div class="control-group">
 					     			<label for="gurdar" class="control-label"></label>
 					     			<div class="controls">
-					     				 <input type="hidden" name="editCierre">
+					     				 <input type="hidden" name="editGasto">
 					     				<button id="bien" class="btn btn-success">Modificar</button>
 					     			</div>
 					     		</div>
@@ -235,8 +249,8 @@
 							<input type="date" name="fecha1">
 							<label for="fecha2" id="fuente">Fecha Final</label>
 							<input type="date" name="fecha2">
-							<input type="hidden" name="calcularCierre"><br><br>
-							<button type="submit" name="calcularCierre" id="calcularCierre" class="btn btn-success">Calcular</button>
+							<input type="hidden" name="calcularGasto"><br><br>
+							<button type="submit" name="calcularGasto" id="calcularGasto" class="btn btn-success">Calcular</button>
 						</form>
 					</div>
 					<div class="span5 well" id="resultado" style="background: #feffff;">

@@ -334,7 +334,7 @@
         date_default_timezone_set('America/Bogota');
         $fecha = date("Y-m-d");
 
-        $resultado = mysql_query("SELECT * FROM binternet WHERE fecha='$fecha'");
+        $resultado = mysql_query("SELECT baseDia,tipoBase FROM bases WHERE fecha='$fecha'");
 
         $baseInternet=0; $baseRecarga=0; $baseMinutos=0; $baseVitrina=0;
 
@@ -792,6 +792,51 @@
                 echo "<ul><li> <a href='cierreDiario.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
             } ;'
                 </div>';
+    }
+
+
+    public function gastos($gasto,$tgasto,$fecha){
+        mysql_query("INSERT INTO gastos (gasto,tipoGasto,fecha) VALUES ('$gasto','$tgasto','$fecha')") 
+                       or die ("Error"); 
+    }
+
+    public function verGastos(){
+         $resultado = mysql_query("SELECT * FROM gastos ORDER BY fecha");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        
+         while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                         <td>'.$fila['gasto'].'</td>
+                         <td>'.$fila['tipoGasto'].'</td>
+                         <td>'.$fila['fecha'].'</td>
+                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                     </tr>';
+                          // echo $salida;
+        }      
+    }
+
+    public function modificarGasto($gasto,$tgasto,$cod){
+         $resultado = mysql_query("UPDATE gastos SET gasto='$gasto', tipoGasto='$tgasto' WHERE id='$cod'");
+        if($resultado){
+            return true;
+            echo "Bien";
+        }else{
+            return false;
+            echo "Error";
+        }
+    }
+
+    public function calcularGasto($fecha1,$fecha2){
+        $resultado = mysql_query("SELECT sum(gasto) AS total FROM gastos WHERE fecha between '$fecha1' AND '$fecha2'");
+        $fila = mysql_fetch_array($resultado);
+
+        if($fila['total']>0){
+           $salida = '<h3 class="well"> Calculo: $'.number_format($fila['total']).'</h3>';
+           echo $salida;
+           return true;
+        }else{
+            echo "Error";
+            return false;
+        }
     }
 
 

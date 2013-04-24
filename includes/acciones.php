@@ -181,4 +181,28 @@
       $objeto->calcularCierre($fecha1,$fecha2);
    }
 
+   if(isset($_POST['gasto'])){
+      $gasto = $_POST['dinero'];
+      $tgasto = $_POST['tipoGasto'];
+      date_default_timezone_set('America/Bogota');
+      $fecha = date("Y-m-d");
+      $objeto->gastos($gasto,$tgasto,$fecha);
+      $objeto->verGastos();
+   }
+
+   if(isset($_POST['editGasto'])){
+     $gasto = $_POST['dinero'];
+     $tgasto = $_POST['tipoGasto'];
+     $cod = $_POST['id_registro'];
+     if($objeto->modificarGasto($gasto,$tgasto,$cod)){
+         $objeto->verGastos();
+     }
+   }
+
+   if(isset($_POST['calcularGasto'])){
+      $fecha1 = $_POST['fecha1'];
+      $fecha2 = $_POST['fecha2'];
+      $objeto->calcularGasto($fecha1,$fecha2);
+   }
+
 ?>
