@@ -43,6 +43,7 @@
         .hero-unit{
         	margin-top: 30px;
         	text-align: center;
+        	background-image: url('../img/Tarjeta_mario3.png');
         }
 	</style>	
 	<script>
@@ -56,17 +57,68 @@
 		  $(window).on('scroll', function() {
 		    if($(window).scrollTop() > menu_offset.top) {
 		      menu.addClass('menu-fijo');
+
 		    } else {
 		      menu.removeClass('menu-fijo');
 		    }
 		    $('#foco').focus();
 		  });
+		  /*_________________________________*/
+		  $(window).scroll(function(){
+		  	if($(window).scrollTop() >= $(document).height() - $(window).height()){
+		            //console.log("has llegado al final de la pagina");
+		       	if($('.pagination ul li.next a').length){
+			  		//alert("poraca apso ");
+			  	    /*_____________________________________*/
+				    $.ajax({
+				  	 	type: 'GET',
+				  	 	url: $('.pagination ul li.next a').attr('href'),
+				  	 	success: function(html){
+				  	 		//console.log(html);
+				  	 		$('.pagination').remove();
+				  	 		var nuevosGastos = $(html).find('table tbody'),
+				  	 		    nuevaPag     = $(html).find('.pagination'),
+				  	 		    tabla        = $('table');
+				  	 		tabla.find('tbody').append(nuevosGastos.html());
+				  	 		tabla.after(nuevaPag.hide());
+				  	 	}
+				  	});
+			    }else{
+			  	    $('#hide').hide();
+			    }
+			}
+		  
+		  });//fin del scroll
 
-		  $('#clic').click(function(){
+         /*_________________________________________________-*/
 
+		  $('.mostrar-mas a').click(function(e){
+		  	 e.preventDefault();//evitamos que se cargue la pagina
+		  	 //preguntamos que si existen estas clases 
+		  	 if($('.pagination ul li.next a').length){
+		  		//alert("poraca apso ");
+		  	    /*_____________________________________*/
+			    $.ajax({
+			  	 	type: 'GET',
+			  	 	url: $('.pagination ul li.next a').attr('href'),
+			  	 	success: function(html){
+			  	 		//console.log(html);
+			  	 		$('.pagination').remove();
+			  	 		var nuevosGastos = $(html).find('table tbody'),
+			  	 		    nuevaPag     = $(html).find('.pagination'),
+			  	 		    tabla        = $('table');
+			  	 		tabla.find('tbody').append(nuevosGastos.html());
+			  	 		tabla.after(nuevaPag.hide());
+			  	 	}
+			  	});
+		     }else{
+		  	    $('#hide').hide();
+		     }
 		  });
-	  });
+
+	  });//fin del document 
 	</script>
+
 	<?php
       session_start();
       if(isset($_SESSION['id_user'])){
@@ -78,9 +130,7 @@
 	
 	<header class="container">
 		<div class="hero-unit">
-			<p class="page-header">
-			    <h1>Gastos - La Red.Com</h1>
-		    </p>
+			<br><br><br><br><br><br><br>
 		</div>
 	</header>
 
@@ -196,16 +246,15 @@
 						 		  $objeto->verGastos();
 						 		?>
 						 	</tbody>
-                             <div>
-							 	<?php
-							 	    /*
-							 		  require_once('funciones.php');
-							 		  $objeto = new funciones();
-							 		  $objeto->paginacionCierre();
-							 		  */
-							 	?>
-							 </div>
 						 </table>
+						 <div>
+						 	<div class="mostrar-mas" id="hide"><a href="#" class="btn">Mostrar mas</a></div>
+						    <?php
+						 	    require_once('funciones.php');
+						 	    $objeto = new funciones();
+						 	    $objeto->paginacionGastos();
+			          	 	?>
+						 </div>
 					</div>
 					<div class="span4">
 						<div class="mensaje"></div>
@@ -273,7 +322,11 @@
 	</footer>
 
 	<?php 
-	   $numPag = $_SESSION['paginaCierre'];
+	   if(isset($_SESSION['paginaCierre'])){
+	   	  $numPag = $_SESSION['paginaCierre'];
+	   	}else{
+	   		$numPag = 1;
+	   	}
 	   if($numPag>=2){
     ?><script>
     	$(document).ready(function(){

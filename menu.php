@@ -33,6 +33,7 @@
 	    }
 	    #fondo{
 	    	background: #feffff;
+	       	/* box-shadow:inset -3px -2px 37px #000000; */
 	    }
 	    .notas{
 	    	margin-left: 80px;
@@ -119,6 +120,7 @@
 							<li><a href="includes/minutos.php">Minutos</a></li>
 							<li><a href="includes/vitrina.php">Vitrina</a></li>
 							<li><a href="includes/cierreDiario.php">Cierre Dia</a></li>
+							<li><a href="includes/gastos.php">Gastos</a></li>
 							<li><a href="includes/reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -289,7 +291,7 @@
 		   <h2><img src="img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
 		</div>
 		<div class="span4"> <br>
-			<p>Lared.com Version 2.5</p>
+			<p>Lared.com Version 3.0</p>
 		</div>
 	</footer>
 </body>

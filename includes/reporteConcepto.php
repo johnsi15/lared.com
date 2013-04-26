@@ -44,7 +44,7 @@
 	</style>
 	<script>
       $(document).ready(function() {
-		  var menu = $('#bloque');
+		 /* var menu = $('#bloque');
 		  var contenedor = $('#bloque-contenedor');
 		  var menu_offset = menu.offset();
 		  // Cada vez que se haga scroll en la página
@@ -56,19 +56,39 @@
 		    } else {
 		      menu.removeClass('menu-fijo');
 		    }
+		  });*/
+		  /*_________________________________________*/
+		  $(window).scroll(function(){
+		  	if($(window).scrollTop() >= $(document).height() - $(window).height()){
+		  		 /*_____________________________________*/
+				$.ajax({
+				  	type: 'GET',
+				  	url: $('.pagination ul li.next a').attr('href'),
+				  	success: function(html){
+				  	 		//console.log(html);
+				  	        $('.pagination').remove();
+				  	 	var nuevosGastos = $(html).find('table tbody'),
+				  	 		nuevaPag     = $(html).find('.pagination'),
+				  	 		tabla        = $('table');
+				  	    tabla.find('tbody').append(nuevosGastos.html());
+				  	 	tabla.after(nuevaPag.hide());
+				  	}
+				});
+		  	}
 		  });
-	  });
+
+	  });//cierre del document...
 	</script>
 </head>
 <body>
 	<?php
       session_start();
       if(isset($_SESSION['id_user'])){
-			   if(isset($_GET["pagina"])){
-			   	 $num_pag = $_GET["pagina"];
-			   }else{
-			   	 $num_pag = 1;
-			   }
+		   /*if(isset($_GET["pagina"])){
+		   	    $num_pag = $_GET["pagina"];
+		   }else{
+		    	$num_pag = 1;
+		   }*/
       }else{
       	header('Location: ../index.php');
       }
@@ -107,13 +127,14 @@
 	<article class="container well" id="fondo">
 		<div class="row">
 			<aside><h1>Reporte Por Concepto</h1></aside><br><br>
-			<div class="span2"> <div id="bloque"><aside class="well" id="bloque-contenedor">Pagina N° <strong><?php echo $num_pag; ?></strong></aside></div></div>
+			<!-- <div class="span2"> <div id="bloque"><aside class="well" id="bloque-contenedor">Pagina N° <strong><?php //echo $num_pag; ?></strong></aside></div></div> -->
+		   <aside class="span2"></aside>
 		    <div class="span8">
 		    	<div class="mensaje"></div>
 		    	<table class="table table-hover table-bordered">
 		    		<thead>
 		    			<tr>
-		    				<th>Nombre</th>
+		    				<th>Concepto</th>
 		    				<th>Dinero</th>
 		    				<th>Tipo</th>
 		    				<th>Fecha</th>

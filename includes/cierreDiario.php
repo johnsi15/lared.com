@@ -43,6 +43,7 @@
         .hero-unit{
         	margin-top: 30px;
         	text-align: center;
+        	background-image: url('../img/Tarjeta_mario3.png');
         }
 	</style>	
 	<script>
@@ -74,9 +75,7 @@
 	
 	<header class="container">
 		<div class="hero-unit">
-			<p class="page-header">
-			    <h1>Cierre del Dia - La Red.Com</h1>
-		    </p>
+			<br><br><br><br><br><br><br>
 		</div>
 	</header>
 
@@ -188,14 +187,14 @@
 						 		  $objeto->verCierres();
 						 		?>
 						 	</tbody>
-                             <div>
-							 	<?php
-							 		  require_once('funciones.php');
-							 		  $objeto = new funciones();
-							 		  $objeto->paginacionCierre();
-							 	?>
-							 </div>
 						 </table>
+						 <div>
+							<?php
+							 	require_once('funciones.php');
+							 	$objeto = new funciones();
+							    $objeto->paginacionCierre();
+							?>
+						 </div>
 					</div>
 					<div class="span4">
 						<div class="mensaje"></div>
