@@ -44,7 +44,7 @@
 	</style>
 	<script>
       $(document).ready(function() {
-		 /* var menu = $('#bloque');
+		  var menu = $('#bloque');
 		  var contenedor = $('#bloque-contenedor');
 		  var menu_offset = menu.offset();
 		  // Cada vez que se haga scroll en la página
@@ -56,7 +56,8 @@
 		    } else {
 		      menu.removeClass('menu-fijo');
 		    }
-		  });*/
+		  });
+
 		  /*_________________________________________*/
 		  $(window).scroll(function(){
 		  	if($(window).scrollTop() >= $(document).height() - $(window).height()){
@@ -75,6 +76,26 @@
 				  	}
 				});
 		  	}
+		  });
+		  /*____________________________________________________-*/
+		   $('#IrInicio').click(function () {
+		       $('html, body').animate({
+		           scrollTop: '0px'
+		       },
+		       1500);
+		           $('#buscar').focus();
+		       //return false;
+		   });
+		  /*________________________________________*/
+		  $('#buscar').live('keyup',function(){
+		  	   var data = 'query='+$(this).val();
+		  	     //console.log(data);
+      	       
+		  	   $.post('acciones.php',data , function(resp){
+		  	   	 //console.log(resp);
+		  	   	  $('#result').empty();//limpiar los datos
+      	    	  $('#result').html(resp);//mandamos los nuevos datos..
+		  	   },'text');
 		  });
 
 	  });//cierre del document...
@@ -99,7 +120,7 @@
 		</div>
 	</header>
      <!-- Aca va el codigo del modal para modificar los datos-->
-     <div class="hide" id="editarRegistro" title="Editar Registro">
+    <div class="hide" id="editarRegistro" title="Editar Registro">
      	<form action="acciones.php" method="post">
      		<input type="hidden" id="id_registro" name="id_registro" value="0">
      		<div class="control-group">
@@ -122,13 +143,13 @@
      			</div>
      		</div>
      	</form>
-     </div>
+    </div>
      
 	<article class="container well" id="fondo">
+			<input type="text" name="buscar" id="buscar" class="search-query" placeholder="buscar" autofocus>
 		<div class="row">
 			<aside><h1>Reporte Por Concepto</h1></aside><br><br>
-			<!-- <div class="span2"> <div id="bloque"><aside class="well" id="bloque-contenedor">Pagina N° <strong><?php //echo $num_pag; ?></strong></aside></div></div> -->
-		   <aside class="span2"></aside>
+			<div class="span2"> <div id="bloque"><aside class="well" id="bloque-contenedor" style="text-align: center;"><a href="#" id="IrInicio">LaRed.Com</a></aside></div></div> 
 		    <div class="span8">
 		    	<div class="mensaje"></div>
 		    	<table class="table table-hover table-bordered">

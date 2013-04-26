@@ -96,8 +96,8 @@
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
-							<li class="active"><a href="cierreDiario.php">Cierre Dia</a></li>
-							<li><a href="gastos.php">Gastos</a></li>
+							<li class="active"><a href="cierreDiario.php">Cierre</a></li>
+							<li><a href="gastos.php"><i class="icon-bookmark"></i>Gastos</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -175,9 +175,9 @@
 						 <table class="table table-hover table-bordered">
 						 	<thead>
 						 		<tr>
-						 			<th>Fecha</th>
-						 			<th>Dia</th>
 						 			<th>Dinero</th>
+						 			<th>Dia</th>
+						 			<th>Fecha</th>
 						 		</tr>
 						 	</thead>
 						 	<tbody id="resul">
@@ -258,7 +258,11 @@
 	</footer>
 
 	<?php 
-	   $numPag = $_SESSION['paginaCierre'];
+	    if(isset($_SESSION['paginaCierre'])){
+	      $numPag = $_SESSION['paginaCierre'];
+	    }else{
+	    	$numPag = 1;
+	    }
 	   if($numPag>=2){
     ?><script>
     	$(document).ready(function(){

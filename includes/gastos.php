@@ -69,35 +69,35 @@
 		            //console.log("has llegado al final de la pagina");
 		       	if($('.pagination ul li.next a').length){
 			  		//alert("poraca apso ");
+			  		$('#cargando').show();
 			  	    /*_____________________________________*/
 				    $.ajax({
 				  	 	type: 'GET',
 				  	 	url: $('.pagination ul li.next a').attr('href'),
 				  	 	success: function(html){
-				  	 		//console.log(html);
-				  	 		$('.pagination').remove();
+				  	 		console.log(html);
 				  	 		var nuevosGastos = $(html).find('table tbody'),
 				  	 		    nuevaPag     = $(html).find('.pagination'),
 				  	 		    tabla        = $('table');
 				  	 		tabla.find('tbody').append(nuevosGastos.html());
 				  	 		tabla.after(nuevaPag.hide());
+				  	 		$('#cargando').hide();
 				  	 	}
 				  	});
+				  	   $('.pagination').remove();//removemos la clase paginacion para que no me vuelva a cargar datos repetidos
 			    }else{
-			  	    $('#hide').hide();
+			  	    //$('#hide').hide(); para escoder el boton ya no es necesario con el scroll
 			    }
+				  	 		
 			}
 		  
 		  });//fin del scroll
 
          /*_________________________________________________-*/
-
-		  $('.mostrar-mas a').click(function(e){
+		 /*$('.mostrar-mas a').click(function(e){
 		  	 e.preventDefault();//evitamos que se cargue la pagina
 		  	 //preguntamos que si existen estas clases 
 		  	 if($('.pagination ul li.next a').length){
-		  		//alert("poraca apso ");
-		  	    /*_____________________________________*/
 			    $.ajax({
 			  	 	type: 'GET',
 			  	 	url: $('.pagination ul li.next a').attr('href'),
@@ -114,7 +114,7 @@
 		     }else{
 		  	    $('#hide').hide();
 		     }
-		  });
+		  });*/
 
 	  });//fin del document 
 	</script>
@@ -151,8 +151,8 @@
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
-							<li><a href="cierreDiario.php">Cierre Dia</a></li>
-							<li class="active"><a href="gastos.php">Gastos</a></li>
+							<li><a href="cierreDiario.php">Cierre</a></li>
+							<li class="active"><a href="gastos.php"><i class="icon-bookmark"></i>Gastos</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -248,7 +248,8 @@
 						 	</tbody>
 						 </table>
 						 <div>
-						 	<div class="mostrar-mas" id="hide"><a href="#" class="btn">Mostrar mas</a></div>
+						 	<div id="cargando" style="display: none;"><img src="../img/loader.gif" alt=""></div>
+						 	<!-- <div class="mostrar-mas" id="hide"><a href="#" class="btn">Mostrar mas</a></div> -->
 						    <?php
 						 	    require_once('funciones.php');
 						 	    $objeto = new funciones();

@@ -285,7 +285,7 @@
          echo $salida;
     }
 
-    public function reporteDiarioBase(){///TENER EN CUENTA NO TIENE RELACION HACER ALGO AL RESPECTO. y el select no debe de ir asi por si acaso...
+    /*public function reporteDiarioBase(){///TENER EN CUENTA NO TIENE RELACION HACER ALGO AL RESPECTO. y el select no debe de ir asi por si acaso...
         date_default_timezone_set('America/Bogota');
         $fecha = date("Y-m-d");
 
@@ -328,13 +328,13 @@
                         <td> $'.number_format($totalVitrina).'</td>
                   </tr>';
          echo $salida;
-    }
+    }*/
 
     public function reporteBases(){
-        date_default_timezone_set('America/Bogota');
-        $fecha = date("Y-m-d");
+       /* date_default_timezone_set('America/Bogota');
+        $fecha = date("Y-m-d");*/
 
-        $resultado = mysql_query("SELECT baseDia,tipoBase FROM bases WHERE fecha='$fecha'");
+        $resultado = mysql_query("SELECT baseDia,tipoBase FROM bases");
 
         $baseInternet=0; $baseRecarga=0; $baseMinutos=0; $baseVitrina=0;
 
@@ -562,13 +562,21 @@
     
     //REFRES CUANDO EDITAMOS UN DATO SE REFRESQUE LOS DATOS MODIFICADOS.
     public function refres(){
-            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+           $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
 
-            session_start();//iniciamos session para poder estrael los datos de la variable session ok.
-
-            if(isset($_SESSION['paginaActual'])){///veridicaos si existe la variable session paginaActual ok.
-                  $inicio = ($_SESSION['paginaActual']-1)*$cant_reg; //sensillo pagina actula ejemplo 12-1 = 11 * 30 = 330. entonces inicia desdel 330 hasta el 30 osea 30 registro.
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
             }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
             $resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
            
             while($fila = mysql_fetch_array($resultado)){
@@ -650,14 +658,29 @@
         $resultado = mysql_query("SELECT sum(total) AS total FROM totalesdia WHERE fecha between'$fecha1' AND '$fecha2' AND tipo='$tipo'");
         $fila = mysql_fetch_array($resultado);
 
+        $result = mysql_query("SELECT sum(gasto) AS gasto FROM gastos WHERE fecha between'$fecha1' AND '$fecha2'");
+        $row = mysql_fetch_array($result);
+
+        if($tipo == 'internet'){
+              $ganancia = $fila['total'];
+              $gasto = $row['gasto'];
+              $total = $ganancia - $gasto;
+        }else{
+            $total = $fila['total'];
+        }
+
         if($fila['total']>0){
-           $salida = '<h3 class="well"> Calculo: $'.number_format($fila['total']).'</h3>';
+           $salida = '<strong>Fecha Inicial</strong> '.$fecha1.' <strong>- Fecha Final</strong> '. $fecha2.' <h3 class="well" style="text-align: center;"> 
+                       Ganancia: <strong style="color: #df0024;">$'.number_format($fila['total']).'</strong><br>
+                       Gastos: <strong style="color: #df0024;">$'.number_format($row['gasto']).'</strong> <br>
+                       Total Ganancia: <strong style="color: #df0024;">$'.number_format($total).'</strong></h3>';
            echo $salida;
            return true;
         }else{
             echo "Error";
             return false;
         }
+
     }
 
     public function cierreDia($fecha,$dinero,$dia){
@@ -686,9 +709,9 @@
         
          while($fila = mysql_fetch_array($resultado)){
                 echo '<tr> 
-                         <td>'.$fila['id'].'</td>
-                         <td>'.$fila['dia'].'</td>
                          <td>'.$fila['dinero'].'</td>
+                         <td>'.$fila['dia'].'</td>
+                         <td>'.$fila['id'].'</td>
                          <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
                      </tr>';
                           // echo $salida;
@@ -708,9 +731,9 @@
         
          while($fila = mysql_fetch_array($resultado)){
                 echo '<tr> 
-                         <td>'.$fila['id'].'</td>
-                         <td>'.$fila['dia'].'</td>
                          <td>'.$fila['dinero'].'</td>
+                         <td>'.$fila['dia'].'</td>
+                         <td>'.$fila['id'].'</td>
                          <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
                      </tr>';
                           // echo $salida;
@@ -719,13 +742,13 @@
 
     public function modificarCierre($dia,$dinero,$cod){
          $resultado = mysql_query("UPDATE cierre SET dia='$dia', dinero='$dinero' WHERE id='$cod'");
-        if($resultado){
-            return true;
-            echo "Bien";
-        }else{
-            return false;
-            echo "Error";
-        }
+            if($resultado){
+                return true;
+                echo "Bien";
+            }else{
+                return false;
+                echo "Error";
+            }
     }
 
     public function calcularCierre($fecha1,$fecha2){
@@ -801,7 +824,8 @@
     }
 
     public function verGastos(){
-         $cant_reg = 3;//definimos la cantidad de datos que deseamos tenes por pagina.
+        //sleep(1);
+         $cant_reg = 5;//definimos la cantidad de datos que deseamos tenes por pagina.
 
             if(isset($_GET["pagina"])){
                 $num_pag = $_GET["pagina"];//numero de la pagina
@@ -815,10 +839,10 @@
             }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
                 $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
             }
-         $resultado = mysql_query("SELECT * FROM gastos ORDER BY fecha LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+         $resultado = mysql_query("SELECT * FROM gastos ORDER BY fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
         
          while($fila = mysql_fetch_array($resultado)){
-                echo '<tr class="post"> 
+                echo '<tr> 
                          <td>'.$fila['gasto'].'</td>
                          <td>'.$fila['tipoGasto'].'</td>
                          <td>'.$fila['fecha'].'</td>
@@ -829,7 +853,7 @@
     }
 
     public function paginacionGastos(){
-        $cant_reg = 3;//definimos la cantidad de datos que deseamos tenes por pagina.
+        $cant_reg = 5;//definimos la cantidad de datos que deseamos tenes por pagina.
 
             if(isset($_GET["pagina"])){
                 $num_pag = $_GET["pagina"];//numero de la pagina
@@ -866,13 +890,13 @@
 
     public function modificarGasto($gasto,$tgasto,$cod){
          $resultado = mysql_query("UPDATE gastos SET gasto='$gasto', tipoGasto='$tgasto' WHERE id='$cod'");
-        if($resultado){
-            return true;
-            echo "Bien";
-        }else{
-            return false;
-            echo "Error";
-        }
+            if($resultado){
+                return true;
+                echo "Bien";
+            }else{
+                return false;
+                echo "Error";
+            }
     }
 
     public function calcularGasto($fecha1,$fecha2){
@@ -887,6 +911,43 @@
             echo "Error";
             return false;
         }
+    }
+
+    /*________________________________________________________________*/
+    //BUSCADOR DE CONCEPTO......
+    public function buscarConcepto($palabra){
+        if($palabra == ''){
+            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        }else{
+          $resultado = mysql_query("SELECT * FROM cinternet WHERE nombre LIKE'%$palabra%' OR tipoConcepto LIKE '%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
+        }
+        //echo json_encode($resultado);
+        while($fila = mysql_fetch_array($resultado)){
+               $salida = '<tr> 
+                    <td>'.$fila['nombre'].'</td>
+                    <td>'.$fila['dinero'].'</td>
+                    <td>'.$fila['tipoConcepto'].'</td>
+                    <td>'.$fila['fecha'].'</td>
+                    <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                </tr>';
+                          // echo $salida;
+                echo $salida;
+        }  
     }
 
 

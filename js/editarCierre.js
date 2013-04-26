@@ -19,7 +19,7 @@ $(document).ready(function(){
             $('#formulario').dialog('open');
             //estraemos los campos.
             $('#dia').val($(this).parent().parent().children('td:eq(1)').text());
-            $('#dinero').val($(this).parent().parent().children('td:eq(2)').text());
+            $('#dinero').val($(this).parent().parent().children('td:eq(0)').text());
       });
 
       //editar registro de la tabla ajax

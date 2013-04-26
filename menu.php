@@ -83,7 +83,8 @@
          	 $("#recuadro").hide("slow");
          	// alert("Bien");
          });
-	  });
+
+	  });//cierre del document
 	</script>
 	<?php
       session_start();
@@ -119,8 +120,8 @@
 							<li><a href="includes/recargas.php">Recargas</a></li>
 							<li><a href="includes/minutos.php">Minutos</a></li>
 							<li><a href="includes/vitrina.php">Vitrina</a></li>
-							<li><a href="includes/cierreDiario.php">Cierre Dia</a></li>
-							<li><a href="includes/gastos.php">Gastos</a></li>
+							<li><a href="includes/cierreDiario.php">Cierre</a></li>
+							<li><a href="includes/gastos.php"><i class="icon-bookmark"></i>Gastos</a></li>
 							<li><a href="includes/reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -103,8 +103,8 @@
       $nombre = $_POST['nombre'];
       $dinero = $_POST['dinero'];
       if($objeto->modificarConcepto($cod,$nombre,$dinero)){
-              //$objeto->buscarReporteConcepto();
-               $objeto->refres();
+            $objeto->paginacion();
+            $objeto->refres();
       }
    }
 
@@ -195,6 +195,7 @@
      $tgasto = $_POST['tipoGasto'];
      $cod = $_POST['id_registro'];
      if($objeto->modificarGasto($gasto,$tgasto,$cod)){
+         $objeto->paginacionGastos();
          $objeto->verGastos();
      }
    }
@@ -203,6 +204,11 @@
       $fecha1 = $_POST['fecha1'];
       $fecha2 = $_POST['fecha2'];
       $objeto->calcularGasto($fecha1,$fecha2);
+   }
+    //echo " poraca si pasa ".$_POST['buscar'];
+   if(isset($_POST['query'])){
+       $palabra = $_POST['query'];
+       $objeto->buscarConcepto($palabra);
    }
 
 ?>
