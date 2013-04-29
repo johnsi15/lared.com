@@ -165,7 +165,7 @@
 
     <!-- Segundo articulo para ver totales de meses y dias-->
 	<article class="container well" id="fondo">
-		<p id="titulo">Suma de Reportes por Fecha</p><br>
+		<p id="titulo">Calculo de Cierres Menos Gastos</p><br>
 		<div class="row">
 			<div class="span3 well" id="fondo" style="margin-left: 60px;">
 				<form action="acciones.php" method="post">

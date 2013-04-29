@@ -658,11 +658,14 @@
         $resultado = mysql_query("SELECT sum(total) AS total FROM totalesdia WHERE fecha between'$fecha1' AND '$fecha2' AND tipo='$tipo'");
         $fila = mysql_fetch_array($resultado);
 
+        $cierre = mysql_query("SELECT sum(dinero) AS cierre FROM cierre WHERE id between'$fecha1' AND '$fecha2'");
+        $filaCierre = mysql_fetch_array($cierre);
+
         $result = mysql_query("SELECT sum(gasto) AS gasto FROM gastos WHERE fecha between'$fecha1' AND '$fecha2'");
         $row = mysql_fetch_array($result);
 
         if($tipo == 'internet'){
-              $ganancia = $fila['total'];
+              $ganancia = $filaCierre['cierre'];
               $gasto = $row['gasto'];
               $total = $ganancia - $gasto;
         }else{
