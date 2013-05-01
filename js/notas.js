@@ -1,9 +1,9 @@
 $(document).ready(function(){
 	///BUSCAMOS LOS CAMPOS EN TODAS LAS TABLAS-> cuando le den buscar
-	    var pet = $('.span3 form').attr('action');
-      var met = $('.span3 form').attr('method');
+	    var pet = $('.span4 form').attr('action');
+      var met = $('.span4 form').attr('method');
 
-     $('.span3 form').submit(function(e){
+     $('.span4 form').submit(function(e){
      	         e.preventDefault();
                $.ajax({
                    beforeSend: function(){
@@ -11,13 +11,13 @@ $(document).ready(function(){
                    },
                    url: pet,
                    type: met,
-                   data: $('.span3 form').serialize(),
+                   data: $('.span4 form').serialize(),
                    success: function(resp){
                    	   console.log(resp);
                        if(resp == "Error"){
-                             setTimeout(function(){ $(".span3 .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
+                             setTimeout(function(){ $(".span4 .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
                              var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Nombre o Contraseña Incorrecta'+'</strong>'+'<br> Intente Nuevamente '+'</div>';
-                             $('.span3 .alert').remove();
+                             $('.span4 .alert').remove();
                              $('#mensaje').html(error);
                        }else{
 	                        $('#foco').empty();//limpiar la tabla.

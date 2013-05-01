@@ -9,6 +9,8 @@
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<script src="js/jquery.validate.js"></script>
+	<script src="js/funciones.js"></script>
 	<script src="js/notas.js"></script>
 	<script src="js/registrarPrecios.js"></script>
 	<style>
@@ -21,6 +23,13 @@
 	    td{
 	    	font-size: 24px;
 	    }
+	    label.error{
+			float: none; 
+			color: red; 
+			padding-left: .5em;
+		    vertical-align: middle;
+		    font-size: 12px;
+		}
 	    p{
 	    	color: #df0024;
 	    	font-size: 20px;
@@ -97,7 +106,7 @@
 </head>
 <body>
 	
-	<header class="container">
+	<header class="container" id="validate">
 		<div class="hero-unit">
 			<br><br><br><br><br><br><br>
 		</div>
@@ -138,11 +147,32 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span3"> <aside><strong>Fecha: <?php 
+			<div class="span3 well"> <aside><strong>Fecha: <?php 
 			                               date_default_timezone_set('America/Bogota');
                                            $fecha = date("Y-m-d");
                                            echo $fecha;
-                                        ?></strong></aside>
+                                        ?></strong></aside><br>
+	               	 <form action="includes/acciones.php" method="post" id="validate2" class="limpiar">
+							<div class="control-group">
+								<h1>Vitrina</h1>
+				    			<label for="nombre" class="control-label">Concepto</label>
+				    			<div class="controls">
+				    			   <input  type="text" name="nombre" id="foco" class="span2" required autofocus>
+				    			</div>
+				    		</div>
+				    		<div class="control-group">
+				    			<label for="clave" class="control-label">Dinero</label>
+				    			<div class="controls">
+				    				<input type="text" name="dinero" class="span2"  required>
+				    			</div>
+			    			</div>
+			    			<input type="hidden" name="tipoConcep" value="vitrina">
+			    			<div class="control-group">
+			    				<div class="controls">
+			    				   <button id="boton" name="guardarVitri" class="btn btn-success">Guardar</button>
+			    				</div>
+			    			</div>
+					</form>                         
             </div>
 			<div class="span7 well" id="fondo">
 				<h1>Base del Dia</h1>
@@ -192,16 +222,16 @@
 	</article>
 
     <!-- CUADRO DE NOTAS......-->
-	<div class="span3" id="recuadro" style="display: none;">
+	<div class="span4" id="recuadro" style="display: none;">
 		<form action="includes/acciones.php" method="post">
 			<div class="control-group"> <!-- <ul id="boton" class="btn btn-inverse" style="margin-left: 230px;">X</ul> -->
-			   	<label for="Notas"><strong>Notas:</strong></label>
+			   	<label for="Notas"><strong style="color: white;">Notas:</strong></label>
 			   	<div class="controls"><!-- Tener en cuenta el texarea deja espacion si no se acomoda las llaves del php seguidas ok -->
 				    <textarea name="nota" id="foco" cols="0" rows="7" autofocus><?php require_once("includes/funciones.php"); $objeto = new funciones(); $objeto->verNota();
 				    ?></textarea>
 			   	</div>
 			   	<input type="hidden" name="notas">
-			    <button class="btn btn-inverse">Guardar</button>
+			    <button id="nota" class="btn btn-inverse">Guardar</button>
 		    </div>
 		</form>
 	</div>

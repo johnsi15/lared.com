@@ -21,7 +21,9 @@ $(document).ready(function(){
 		submitHandler: function(form){
 			///BUSCAMOS LOS CAMPOS EN TODAS LAS TABLAS-> cuando le den buscar
 		    var pet = $('.span3 form').attr('action');
-	        var met = $('.span3 form').attr('method');
+	      var met = $('.span3 form').attr('method');
+        console.log(pet);
+        console.log(met);
 	         $.ajax({
                    beforeSend: function(){
 

@@ -11,6 +11,9 @@
 	<script src="../js/modificar.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<style>
+		body{
+		   background: rgba(73, 59, 42, 0.8);	
+		}
 		h1{
 			text-align: center;
 		}
