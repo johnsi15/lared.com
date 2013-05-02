@@ -450,7 +450,7 @@
             }      
     }
     
-    //ESTA ES LA PAGINACION DE LOS DATOS DE REPORTE POR CONCEPTO..
+    /*ESTA ES LA PAGINACION DE LOS DATOS DE REPORTE POR CONCEPTO..*/
     public function paginacion(){
             $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
 
@@ -602,7 +602,7 @@
             echo "Error";
         }
     }
-
+    /*ACTULIZAMOS LAS NOTAS DEL MENU....*/
     public function actualizarNota($nota){
         $resultado = mysql_query("SELECT id FROM notas");
           
@@ -616,7 +616,7 @@
         
 
     }
-
+    /*NOTAS RAPIDAS DEL MENU........ */
     public function verNota(){
         $resultado = mysql_query("SELECT nota FROM notas");
         $fila = mysql_fetch_array($resultado);
@@ -654,6 +654,7 @@
         }
     }
 
+    /*CALCULO DE LOS REPORTES DE TODOS LOS DIAS POR FECHA Y TIPO*/
     public function calcularReporte($fecha1,$fecha2,$tipo){
         $resultado = mysql_query("SELECT sum(total) AS total FROM totalesdia WHERE fecha between'$fecha1' AND '$fecha2' AND tipo='$tipo'");
         $fila = mysql_fetch_array($resultado);
@@ -674,7 +675,7 @@
 
         if($fila['total']>0){
            $salida = '<strong>Fecha Inicial</strong> '.$fecha1.' <strong>- Fecha Final</strong> '. $fecha2.' <h3 class="well" style="text-align: center;"> 
-                       Ganancia: <strong style="color: #df0024;">$'.number_format($fila['total']).'</strong><br>
+                       Ganancia: <strong style="color: #df0024;">$'.number_format($filaCierre['cierre']).'</strong><br>
                        Gastos: <strong style="color: #df0024;">$'.number_format($row['gasto']).'</strong> <br>
                        Total Ganancia: <strong style="color: #df0024;">$'.number_format($total).'</strong></h3>';
            echo $salida;
@@ -715,7 +716,7 @@
                          <td>'.$fila['dinero'].'</td>
                          <td>'.$fila['dia'].'</td>
                          <td>'.$fila['id'].'</td>
-                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                         <td><a id="editCierre" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
                      </tr>';
                           // echo $salida;
         }      
@@ -737,7 +738,7 @@
                          <td>'.$fila['dinero'].'</td>
                          <td>'.$fila['dia'].'</td>
                          <td>'.$fila['id'].'</td>
-                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                         <td><a id="editCierre" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
                      </tr>';
                           // echo $salida;
         }      
@@ -849,7 +850,7 @@
                          <td>'.$fila['gasto'].'</td>
                          <td>'.$fila['tipoGasto'].'</td>
                          <td>'.$fila['fecha'].'</td>
-                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                         <td><a id="editGasto" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
                      </tr>';
                           // echo $salida;
         }      
@@ -917,42 +918,27 @@
     }
 
     /*________________________________________________________________*/
-    //BUSCADOR DE CONCEPTO......
+    //BUSCADOR EN TIEMPO REAL POR  DE CONCEPTO......
     public function buscarConcepto($palabra){
         if($palabra == ''){
-            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
-
-            if(isset($_GET["pagina"])){
-                $num_pag = $_GET["pagina"];//numero de la pagina
-            }else{
-                $num_pag = 1;
-            }
-
-            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
-                $inicio = 0;
-                $num_pag = 1;
-            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
-                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
-            }
-
-            $resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+            //$resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
         }else{
-          $resultado = mysql_query("SELECT * FROM cinternet WHERE nombre LIKE'%$palabra%' OR tipoConcepto LIKE '%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
+             $resultado = mysql_query("SELECT * FROM cinternet WHERE nombre LIKE'%$palabra%' OR tipoConcepto LIKE '%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
+            //echo json_encode($resultado);
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            }  
         }
-        //echo json_encode($resultado);
-        while($fila = mysql_fetch_array($resultado)){
-               $salida = '<tr> 
-                    <td>'.$fila['nombre'].'</td>
-                    <td>'.$fila['dinero'].'</td>
-                    <td>'.$fila['tipoConcepto'].'</td>
-                    <td>'.$fila['fecha'].'</td>
-                    <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
-                </tr>';
-                          // echo $salida;
-                echo $salida;
-        }  
+       
     }
-
 
   }//cierre de la clase
 ?>

@@ -95,7 +95,8 @@
 		  	     //console.log(data);
       	       
 		  	   $.post('acciones.php',data , function(resp){
-		  	   	 //console.log(resp);
+		  	   	  //console.log(resp);
+		  	   	  $('.pagination').remove();
 		  	   	  $('#result').empty();//limpiar los datos
       	    	  $('#result').html(resp);//mandamos los nuevos datos..
 		  	   },'text');

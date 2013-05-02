@@ -10,9 +10,11 @@
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/jquery.validate.js"></script>
 	<script src="../js/funciones.js"></script>
-	<script src="../js/editarCierre.js"></script>
-	<script src="../js/calcularCierre.js"></script>
+	<script src="../js/editar.js"></script>
+	<script src="../js/calculos.js"></script>
 	<script src="../js/bootstrap.js"></script>
+	<!--<script src="../js/editarCierre.js"></script>-->
+	<!--<script src="../js/calcularCierre.js"></script>-->
 </head>
 <body>
 	<style>
@@ -114,6 +116,9 @@
 			</div>
 		</div>
          <h1>Cierre del Dia </h1><br><br>
+         <div id="mensajeCalculo"></div><!--Mensaje de exito o de error del calculo realizado-->
+		 <div class="mensaje"></div><!--Mensaje de exito del dato modificado-->
+		 <div id="mensaje"></div><!--mensaje de exito o de error al realizar cierre-->
 		<div class="tabbale tabs-left well" id="fondo">
 			<ul class="nav nav-tabs">
 				<li  class="active"><a href="#tab1" data-toggle="tab" id="clic"> <strong>Hacer Cierre</strong></a></li>
@@ -166,7 +171,6 @@
 		    					</a>
 		    				</li>
     					</ul>
-						<div id="mensaje"></div>
 					</div>
 				</div>
 				<!-- Seccion numero Dos-->
@@ -197,7 +201,6 @@
 						 </div>
 					</div>
 					<div class="span4">
-						<div class="mensaje"></div>
   					<!-- Aca va el codigo del modal para modificar los datos-->
 						<div class="hide" id="formulario" title="Editar Cierre">
 							<form action="acciones.php" method="post">
@@ -218,7 +221,7 @@
 					     			<label for="gurdar" class="control-label"></label>
 					     			<div class="controls">
 					     				 <input type="hidden" name="editCierre">
-					     				<button id="bien" class="btn btn-success">Modificar</button>
+					     				<button id="bienCierre" class="btn btn-success">Modificar</button>
 					     			</div>
 					     		</div>
 					     	</form>
@@ -243,7 +246,6 @@
 					</div>
                 </div>
 			</div><!--Final de tab del contenido -->
-		        <div id="mensajeCalculo"></div>
 		</div>
 	</article>
 

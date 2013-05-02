@@ -10,9 +10,11 @@
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/jquery.validate.js"></script>
 	<script src="../js/funciones.js"></script>
-	<script src="../js/editarGasto.js"></script>
-	<script src="../js/calcularGasto.js"></script>
+	<script src="../js/editar.js"></script>
+	<script src="../js/calculos.js"></script>
 	<script src="../js/bootstrap.js"></script>
+	<!--<script src="../js/editarGasto.js"></script>-->
+	<!--<script src="../js/calcularGasto.js"></script>-->
 </head>
 <body>
 	<style>
@@ -169,6 +171,9 @@
 			</div>
 		</div>
          <h1>Gastos </h1><br><br>
+         <div id="mensajeCalculo"></div><!--mensaje de exito o de error al calcular gastos.....-->
+         <div class="mensaje"></div><!--menssaje de exito al modificar un dato-->
+         <div id="mensaje"></div><!--mensaje de exito o de error al realizar el gasto-->
 		<div class="tabbale tabs-left well" id="fondo">
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab1" data-toggle="tab" id="clic"> <strong>HACER GASTOS</strong></a></li>
@@ -225,7 +230,6 @@
 		    					</a>
 		    				</li>
     					</ul>
-						<div id="mensaje"></div>
 					</div>
 				</div>
 				<!-- Seccion numero Dos-->
@@ -258,7 +262,6 @@
 						 </div>
 					</div>
 					<div class="span4">
-						<div class="mensaje"></div>
   					<!-- Aca va el codigo del modal para modificar los datos-->
 						<div class="hide" id="formulario" title="Editar Gasto">
 							<form action="acciones.php" method="post">
@@ -283,7 +286,7 @@
 					     			<label for="gurdar" class="control-label"></label>
 					     			<div class="controls">
 					     				 <input type="hidden" name="editGasto">
-					     				<button id="bien" class="btn btn-success">Modificar</button>
+					     				<button id="bienGasto" class="btn btn-success">Modificar</button>
 					     			</div>
 					     		</div>
 					     	</form>
@@ -308,7 +311,6 @@
 					</div>
                 </div>
 			</div><!--Final de tab del contenido -->
-		        <div id="mensajeCalculo"></div>
 		</div>
 	</article>
 

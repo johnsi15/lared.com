@@ -8,7 +8,8 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js/buscar.js"></script>
-	<script src="../js/calcularReporte.js"></script>
+	<script src="../js/calculos.js"></script>
+	<!--<script src="../js/calcularReporte.js"></script>-->
 	<style>
 	    body{
 	    	font-family: "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
@@ -165,7 +166,8 @@
 
     <!-- Segundo articulo para ver totales de meses y dias-->
 	<article class="container well" id="fondo">
-		<p id="titulo">Calculo de Cierres Menos Gastos</p><br>
+		<p id="titulo">Calculo de Cierres Menos Gastos</p><br><br>
+		<div id="mensajeCalculo"></div><!--Mensaje de exito o de Error.....-->
 		<div class="row">
 			<div class="span3 well" id="fondo" style="margin-left: 60px;">
 				<form action="acciones.php" method="post">
@@ -181,7 +183,7 @@
 					<label for="fecha2" id="fuente">Fecha Final</label>
 					<input type="date" name="fecha2">
 					<input type="hidden" name="calcular"><br><br>
-					<button type="submit" name="calcular" class="btn btn-success">Calcular</button>
+					<button id="calcularReporte" name="calcular" class="btn btn-success">Calcular</button>
 				</form>
 			</div>
 			<aside class="span1"></aside>
@@ -189,7 +191,6 @@
 				<h3 class="well" style="text-align: center;"> Calcular Ganancias Y Gastos </h3>
 			</div>
 		</div>
-		<div id="mensajeCalculo"></div>
 	</article>
 
 	<footer class="container well">

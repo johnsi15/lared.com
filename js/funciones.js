@@ -8,6 +8,7 @@ $(document).ready(function(){
 		}
 	});
 
+  /*_____________________________________________*/
 	$("#validate2").validate({
 		rules:{
 			 nombre:{
@@ -60,6 +61,7 @@ $(document).ready(function(){
 		}//cierre del submitHandler
 	});
 
+  /*__________________________________________________*/
 	$("#validate3").validate({
 		rules:{
 			nombre:{
@@ -110,7 +112,8 @@ $(document).ready(function(){
                });
         }///cierre del submitHandler...
 	});
-    
+
+    /*_____________________________________________*/
     $("#cierre").validate({
     	rules:{
     		dinero:{
@@ -133,7 +136,7 @@ $(document).ready(function(){
                    	   console.log(resp);
                        if(resp == "Error"){
                              setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
-                             var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+'<br> Ese Cierre Ya se hizo '+'</div>';
+                             var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+' Ese Cierre Ya se hizo '+'</div>';
                              $('.span6 .alert').remove();
                              $('#mensaje').html(error);
                        }else{
@@ -158,6 +161,7 @@ $(document).ready(function(){
         }///cierre del submitHandler...
     });
 
+    /*________________________________________________________*/
     $("#gasto").validate({
       rules:{
         dinero:{
@@ -180,7 +184,7 @@ $(document).ready(function(){
                        console.log(resp);
                        if(resp == "Error"){
                              setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
-                             var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+'<br> Algo salio Mal '+'</div>';
+                             var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+' El Gasto no se pudo realizar '+'</div>';
                              $('.span6 .alert').remove();
                              $('#mensaje').html(error);
                        }else{

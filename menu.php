@@ -77,7 +77,7 @@
 		  // Cada vez que se haga scroll en la página
 		  // haremos un chequeo del estado del menú
 		  // y lo vamos a alternar entre 'fixed' y 'static'.
-		  var tamaño = 400;
+		  var tamaño = 550;
 		  $(window).on('scroll', function() {
 		    if($(window).scrollTop() > tamaño) {
 		      cuadro.addClass('notas');

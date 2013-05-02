@@ -171,7 +171,7 @@
        $cod = $_POST['id_registro'];
 
        if($objeto->modificarCierre($dia,$dinero,$cod)){
-         $objeto->refresCierre();
+          $objeto->refresCierre();
        }
    }
 
@@ -205,7 +205,7 @@
       $fecha2 = $_POST['fecha2'];
       $objeto->calcularGasto($fecha1,$fecha2);
    }
-    //echo " poraca si pasa ".$_POST['buscar'];
+    /*buscador en tiempo real......*/
    if(isset($_POST['query'])){
        $palabra = $_POST['query'];
        $objeto->buscarConcepto($palabra);
