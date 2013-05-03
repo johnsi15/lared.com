@@ -245,7 +245,7 @@
 				</div>
 				<!-- Seccion numero Dos-->
 				<div class="tab-pane" id="tab2">
-					<div class="span6">
+					<div class="span7">
 						 <table class="table table-hover table-bordered">
 						 	<thead>
 						 		<tr>
@@ -303,6 +303,27 @@
 					     	</form>
 						</div>
 					</div>
+				</div>
+
+				 <!--Aca va el codigo para eliminar-->
+			    <div class="hide" id="deleteReg" title="Eliminar Gasto">
+				    <form action="acciones.php" method="post">
+				    	<fieldset id="datosOcultos">
+				    		<input type="hidden" id="id_delete" name="id_delete" value="0"/>
+				    	</fieldset>
+				    	<div class="control-group">
+				    		<label for="activoElim" class="control-label">
+				    		    <div class="alert alert-danger">
+				    		    	<strong>Esta seguro de Eliminar este Gasto</strong>
+				    		    </div>
+				    		</label>
+					    	<div class="controls">
+					    		<input type="hidden" name="deleteGasto"/> 
+					    		<button type="submit" class="btn btn-success">Aceptar</button>
+					    		<button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button>
+					    	</div>
+				    	</div>
+				    </form>
 				</div>
 
                 <!-- Seccion numero Tres-->

@@ -816,6 +816,7 @@
                          <td>'.$fila['tipoGasto'].'</td>
                          <td>'.$fila['fecha'].'</td>
                          <td><a id="editGasto" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                         <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
                      </tr>';
                           // echo $salida;
         }      
@@ -916,6 +917,10 @@
 
     public function deleteCierre($cod){
         mysql_query("DELETE FROM cierre WHERE id='$cod'");
+    }
+
+    public function deleteGasto($cod){
+        mysql_query("DELETE FROM gastos WHERE id='$cod'");
     }
 
   }//cierre de la clase

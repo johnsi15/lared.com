@@ -243,4 +243,11 @@
       $objeto->verCierres();
    }
 
+   if(isset($_POST['deleteGasto'])){
+     $cod = $_POST['id_delete'];
+     $objeto->deleteGasto($cod);
+     $objeto->paginacionGastos();
+     $objeto->verGastos();
+   }
+
 ?>
