@@ -6,9 +6,11 @@
 	<link rel="stylesheet" href="../css/bootstrap.css">
 	<link rel="stylesheet" href="../css/estilos.css">
 	<script src="../js/jquery.js"></script>
+	<script src="../js/jquery-ui.js"></script><!--Aca no la uso pero si la necesito por el archivo registrar-->
 	<script src="../js/jquery.validate.js"></script>
 	<script src="../js/bootstrap.js"></script>
-	<script src="../js/recargas.js"></script>
+	<script src="../js/registrar.js"></script>
+	<!--<script src="../js/recargas.js"></script>-->
 </head>
 <body>
 	<style>
@@ -102,7 +104,7 @@
                	   ?>
                	      <script>
                	        $(document).ready(function(){
-               	        	$("#boton",this).attr("disabled","disabled");
+               	        	$("#botonRecarga",this).attr("disabled","disabled");
                	        });
                	      </script>
                	   <?php
@@ -162,7 +164,7 @@
 		    			<div class="control-group">
 		    				<div class="controls">
 		    					<input type="hidden" name="guardarRecar">
-		    				   <button type="submit" id="boton" name="guardarRecar" class="btn btn-success">Guardar</button>
+		    				   <button type="submit" id="botonRecarga" name="guardarRecar" class="btn btn-success">Guardar</button>
 		    				</div>
 		    			</div>
 			        </form>

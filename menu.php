@@ -11,8 +11,10 @@
 	<script src="js/bootstrap.js"></script>
 	<script src="js/jquery.validate.js"></script>
 	<script src="js/funciones.js"></script>
-	<script src="js/notas.js"></script>
-	<script src="js/registrarPrecios.js"></script>
+	<script src="js/registrar.js"></script>
+	<script src="js/eliminar.js"></script>
+	<!--<script src="js/registrarPrecios.js"></script>-->
+	<!--<script src="js/notas.js"></script>-->
 	<style>
 	    h1{
 	    	text-align: center;
@@ -44,6 +46,9 @@
 	    	background: #feffff;
 	       	/* box-shadow:inset -3px -2px 37px #000000; */
 	    }
+	    #validate2{
+		    margin-left: 17%;
+		}
 	    .notas{
 	    	margin-left: 80px;
 	    	position: fixed;
@@ -82,9 +87,11 @@
 		    if($(window).scrollTop() > tamaño) {
 		      cuadro.addClass('notas');
 		      $("#recuadro").css("display", "block");
+		      $('#notas').focus();
 		    } else {
 		      $("#recuadro").css("display", "none");
 		      cuadro.removeClass('notas');
+		      $('#foco').focus();
 		    }
 		  });
          /*____________________________________________-*/
@@ -169,13 +176,13 @@
 			    			<input type="hidden" name="tipoConcep" value="vitrina">
 			    			<div class="control-group">
 			    				<div class="controls">
-			    				   <button id="boton" name="guardarVitri" class="btn btn-success">Guardar</button>
+			    				   <button id="boton" name="guardarVitrinaMenu" class="btn btn-success">Guardar</button>
 			    				</div>
 			    			</div>
 					</form>                         
             </div>
 			<div class="span7 well" id="fondo">
-				<h1>Base del Dia</h1>
+				<h1>Bases del Dia</h1>
 				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
@@ -193,6 +200,7 @@
 						?>
 					</tbody>
 				</table>
+			   <div id="mensaje"></div><!--Mensaje de exito o de error de la vitrina-->
 			</div>
 		</div>
 		<hr>
@@ -209,7 +217,7 @@
 							<th>Vitrina</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="resul">
 						<?php
 						   require_once('includes/funciones.php');
                			   $objeto = new funciones();
@@ -227,7 +235,7 @@
 			<div class="control-group"> <!-- <ul id="boton" class="btn btn-inverse" style="margin-left: 230px;">X</ul> -->
 			   	<label for="Notas"><strong style="color: white;">Notas:</strong></label>
 			   	<div class="controls"><!-- Tener en cuenta el texarea deja espacion si no se acomoda las llaves del php seguidas ok -->
-				    <textarea name="nota" id="foco" cols="0" rows="7" autofocus><?php require_once("includes/funciones.php"); $objeto = new funciones(); $objeto->verNota();
+				    <textarea name="nota" id="notas" cols="0" rows="7" autofocus><?php require_once("includes/funciones.php"); $objeto = new funciones(); $objeto->verNota();
 				    ?></textarea>
 			   	</div>
 			   	<input type="hidden" name="notas">
@@ -241,7 +249,7 @@
 		<div class="row">
 			<div class="span2"></div>
 			<div class="span8">
-			    <aside><h1>Precios La Red.Com</h1></aside>
+			    <aside><h1>Precios La Red.Com</h1></aside><br>
 				<table class="table table-hover table-bordered table-striped ">
 					<thead>
 						<tr>
@@ -315,7 +323,27 @@
      		</div>
      	</form>
      </div>
-	
+
+      <!--Aca va el codigo para eliminar-->
+    <div class="hide" id="deleteReg" title="Eliminar Precio">
+	    <form action="includes/acciones.php" method="post">
+	    	<fieldset id="datosOcultos">
+	    		<input type="hidden" id="id_delete" name="id_delete" value="0"/>
+	    	</fieldset>
+	    	<div class="control-group">
+	    		<label for="activoElim" class="control-label">
+	    		    <div class="alert alert-danger">
+	    		    	<strong>Esta seguro de Eliminar este Precio</strong>
+	    		    </div>
+	    		</label>
+		    	<div class="controls">
+		    		<input type="hidden" name="deletePrecio"/> 
+		    		<button type="submit" class="btn btn-success">Aceptar</button>
+		    		<button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button>
+		    	</div>
+	    	</div>
+	    </form>
+	</div>
 
 	<footer class="container well">
 		<div class="span7">

@@ -12,6 +12,7 @@
 	<script src="../js/funciones.js"></script>
 	<script src="../js/editar.js"></script>
 	<script src="../js/calculos.js"></script>
+	<script src="../js/eliminar.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<!--<script src="../js/editarGasto.js"></script>-->
 	<!--<script src="../js/calcularGasto.js"></script>-->
@@ -89,11 +90,19 @@
 				  	   $('.pagination').remove();//removemos la clase paginacion para que no me vuelva a cargar datos repetidos
 			    }else{
 			  	    //$('#hide').hide(); para escoder el boton ya no es necesario con el scroll
-			    }
-				  	 		
+			    } 		
 			}
 		  
 		  });//fin del scroll
+
+          /*________________________________*/
+            $('#arriba').click(function () {
+		       $('html, body').animate({
+		           scrollTop: '0px'
+		       },
+		       1500);
+		       //return false;
+		   });
 
          /*_________________________________________________-*/
 		 /*$('.mostrar-mas a').click(function(e){
@@ -154,7 +163,7 @@
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
 							<li><a href="cierreDiario.php">Cierre</a></li>
-							<li class="active"><a href="gastos.php"><i class="icon-bookmark"></i>Gastos</a></li>
+							<li class="active"><a href="#" id="arriba"><i class="icon-bookmark"></i>Gastos</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -174,12 +183,14 @@
          <div id="mensajeCalculo"></div><!--mensaje de exito o de error al calcular gastos.....-->
          <div class="mensaje"></div><!--menssaje de exito al modificar un dato-->
          <div id="mensaje"></div><!--mensaje de exito o de error al realizar el gasto-->
+         <!--MENU LATERAL DE OPCIONES-->
 		<div class="tabbale tabs-left well" id="fondo">
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab1" data-toggle="tab" id="clic"> <strong>HACER GASTOS</strong></a></li>
 				<li><a href="#tab2" data-toggle="tab"><strong>VER GASTOS</strong></a></li>
 				<li><a href="#tab3" data-toggle="tab"><strong>CALCULAR GASTOS</strong></a></li>
 			</ul>
+			<!--CONTENIDO DEL MENU LATERAL-->
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab1">
 					<div class="span3 well" id="fondo">
@@ -314,7 +325,6 @@
 		</div>
 	</article>
 
-
 	<footer class="container well">
 		<div class="span7">
 		   <h2><img src="../img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
@@ -324,35 +334,5 @@
 		</div>
 	</footer>
 
-	<?php 
-	   if(isset($_SESSION['paginaCierre'])){
-	   	  $numPag = $_SESSION['paginaCierre'];
-	   	}else{
-	   		$numPag = 1;
-	   	}
-	   if($numPag>=2){
-    ?><script>
-    	$(document).ready(function(){
-    		$('#tab1').removeClass('tab-pane active');
-		  	$('#tab2').addClass('tab-pane active');
-		  	$('#tab1').addClass('tab-pane');
-		  	$('#1').removeClass('active');
-		  	$('#2').addClass('active');
-    	});
-    </script>
-    <?php
-	   }else{
-	 ?><script>
-	 	$(document).ready(function(){
-    		$('#tab2').removeClass('tab-pane active');
-		  	$('#tab1').addClass('tab-pane active');
-		  	$('#tab2').addClass('tab-pane');
-		  	$('#2').removeClass('active');
-		  	$('#1').addClass('active');
-    	});
-	 </script>
-	 <?php
-	   }
-	?>
 </body>
 </html>

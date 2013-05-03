@@ -91,6 +91,14 @@
       //header('Location: vitrina.php');
    }
 
+   if(isset($_POST['guardarVitrinaMenu'])){
+       $nombre = $_POST['nombre'];
+       $dinero = $_POST['dinero'];
+       $tipoConcep = $_POST['tipoConcep'];
+       $objeto->registrarConcepto($nombre,$dinero,$tipoConcep);
+       $objeto->reporteDiario();
+   }
+
    if(isset($_POST['enviar'])){
        $tipo = $_POST['tipo'];
        $fecha = $_POST['fecha'];
@@ -171,7 +179,9 @@
        $cod = $_POST['id_registro'];
 
        if($objeto->modificarCierre($dia,$dinero,$cod)){
-          $objeto->refresCierre();
+          //$objeto->refresCierre();
+          $objeto->paginacionCierre();
+          $objeto->verCierres();
        }
    }
 
@@ -209,6 +219,28 @@
    if(isset($_POST['query'])){
        $palabra = $_POST['query'];
        $objeto->buscarConcepto($palabra);
+   }
+
+   /*___________________________________________*/
+   //Eliminar
+   if(isset($_POST['deleteConcepto'])){
+      $cod = $_POST['id_delete'];
+      $objeto->deleteConcepto($cod);
+      $objeto->paginacion();
+      $objeto->buscarReporteConcepto();
+   }
+
+   if(isset($_POST['deletePrecio'])){
+      $cod = $_POST['id_delete'];
+      $objeto->deletePrecio($cod);
+      $objeto->verPrecios();
+   }
+
+   if(isset($_POST['deleteCierre'])){
+      $cod = $_POST['id_delete'];
+      $objeto->deleteCierre($cod);
+      $objeto->paginacionCierre();
+      $objeto->verCierres();
    }
 
 ?>

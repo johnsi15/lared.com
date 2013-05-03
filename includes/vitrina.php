@@ -122,7 +122,7 @@
                	  ?>
                	     <script>
                          $(document).ready(function(){
-				              $("#boton",this).attr("disabled","disabled");
+				              $("#botonVitrina",this).attr("disabled","disabled");
 				         });
                	     </script>
                	  <?php
@@ -176,7 +176,7 @@
 		    			<input type="hidden" name="tipoConcep" value="vitrina">
 		    			<div class="control-group">
 		    				<div class="controls">
-		    				   <button id="boton" name="guardarVitri" class="btn btn-success">Guardar</button>
+		    				   <button id="botonVitrina" name="guardarVitri" class="btn btn-success">Guardar</button>
 		    				</div>
 		    			</div>
 				</form>

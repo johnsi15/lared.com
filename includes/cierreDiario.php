@@ -12,6 +12,7 @@
 	<script src="../js/funciones.js"></script>
 	<script src="../js/editar.js"></script>
 	<script src="../js/calculos.js"></script>
+	<script src="../js/eliminar.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<!--<script src="../js/editarCierre.js"></script>-->
 	<!--<script src="../js/calcularCierre.js"></script>-->
@@ -64,7 +65,43 @@
 		    }
 		    $('#foco').focus();
 		  });  	 
-	  });
+
+		  /*_________________________________*/
+		  $(window).scroll(function(){
+		  	if($(window).scrollTop() >= $(document).height() - $(window).height()){
+		            //console.log("has llegado al final de la pagina");
+		       	if($('.pagination ul li.next a').length){
+			  		//alert("poraca apso ");
+			  		$('#cargando').show();
+			  	    /*_____________________________________*/
+				    $.ajax({
+				  	 	type: 'GET',
+				  	 	url: $('.pagination ul li.next a').attr('href'),
+				  	 	success: function(html){
+				  	 		//console.log(html);
+				  	 		var nuevosGastos = $(html).find('table tbody'),
+				  	 		    nuevaPag     = $(html).find('.pagination'),
+				  	 		    tabla        = $('table');
+				  	 		tabla.find('tbody').append(nuevosGastos.html());
+				  	 		tabla.after(nuevaPag.hide());
+				  	 		$('#cargando').hide();
+				  	 	}
+				  	});
+				  	   $('.pagination').remove();//removemos la clase paginacion para que no me vuelva a cargar datos repetidos
+			    } 		
+			}
+		  
+		  });//fin del scroll
+          /*________________________________*/
+            $('#arriba').click(function () {
+		       $('html, body').animate({
+		           scrollTop: '0px'
+		       },
+		       1500);
+		       //return false;
+		   });
+
+	  });//fin de document
 	</script>
 	<?php
       session_start();
@@ -98,7 +135,7 @@
 							<li><a href="recargas.php">Recargas</a></li>
 							<li><a href="minutos.php">Minutos</a></li>
 							<li><a href="vitrina.php">Vitrina</a></li>
-							<li class="active"><a href="cierreDiario.php">Cierre</a></li>
+							<li class="active"><a href="#" id="arriba">Cierre</a></li>
 							<li><a href="gastos.php"><i class="icon-bookmark"></i>Gastos</a></li>
 							<li><a href="reporte.php"><i class="icon-book"></i>Reportes</a></li>
 							<li class="dropdown">
@@ -175,7 +212,7 @@
 				</div>
 				<!-- Seccion numero Dos-->
 				<div class="tab-pane" id="tab2">
-					<div class="span5">
+					<div class="span7">
 						 <table class="table table-hover table-bordered">
 						 	<thead>
 						 		<tr>
@@ -193,6 +230,7 @@
 						 	</tbody>
 						 </table>
 						 <div>
+						 	<div id="cargando" style="display: none;"><img src="../img/loader.gif" alt=""></div>
 							<?php
 							 	require_once('funciones.php');
 							 	$objeto = new funciones();
@@ -228,6 +266,26 @@
 						</div>
 					</div>
 				</div>
+				 <!--Aca va el codigo para eliminar-->
+			    <div class="hide" id="deleteReg" title="Eliminar Cierre">
+				    <form action="acciones.php" method="post">
+				    	<fieldset id="datosOcultos">
+				    		<input type="hidden" id="id_delete" name="id_delete" value="0"/>
+				    	</fieldset>
+				    	<div class="control-group">
+				    		<label for="activoElim" class="control-label">
+				    		    <div class="alert alert-danger">
+				    		    	<strong>Esta seguro de Eliminar este Cierre</strong>
+				    		    </div>
+				    		</label>
+					    	<div class="controls">
+					    		<input type="hidden" name="deleteCierre"/> 
+					    		<button type="submit" class="btn btn-success">Aceptar</button>
+					    		<button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button>
+					    	</div>
+				    	</div>
+				    </form>
+				</div>
 
                 <!-- Seccion numero Tres-->
                 <div class="tab-pane" id="tab3">
@@ -249,7 +307,6 @@
 		</div>
 	</article>
 
-
 	<footer class="container well">
 		<div class="span7">
 		   <h2><img src="../img/copyright.png" alt="Autor"> John Andrey Serrano - 2013</h2>
@@ -259,35 +316,5 @@
 		</div>
 	</footer>
 
-	<?php 
-	    if(isset($_SESSION['paginaCierre'])){
-	      $numPag = $_SESSION['paginaCierre'];
-	    }else{
-	    	$numPag = 1;
-	    }
-	   if($numPag>=2){
-    ?><script>
-    	$(document).ready(function(){
-    		$('#tab1').removeClass('tab-pane active');
-		  	$('#tab2').addClass('tab-pane active');
-		  	$('#tab1').addClass('tab-pane');
-		  	$('#1').removeClass('active');
-		  	$('#2').addClass('active');
-    	});
-    </script>
-    <?php
-	   }else{
-	 ?><script>
-	 	$(document).ready(function(){
-    		$('#tab2').removeClass('tab-pane active');
-		  	$('#tab1').addClass('tab-pane active');
-		  	$('#tab2').addClass('tab-pane');
-		  	$('#2').removeClass('active');
-		  	$('#1').addClass('active');
-    	});
-	 </script>
-	 <?php
-	   }
-	?>
 </body>
 </html>

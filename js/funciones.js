@@ -40,7 +40,7 @@ $(document).ready(function(){
                              $('.span3 .alert').remove();
                              $('#mensaje').html(error);
                        }else{
-                            $('#resul').empty();//limpiar la tabla.
+                          $('#resul').empty();//limpiar la tabla.
 	                        $('#resul').html(resp);//imprimir datos de la tabla.
 	                        setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
 	                        var exito = '<div class="alert alert-success">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Registro guardado '+'</strong>'+' el registro se agrego correctamente'+'</div>';

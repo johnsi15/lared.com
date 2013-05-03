@@ -9,6 +9,7 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/modificar.js"></script>
+	<script src="../js/eliminar.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<style>
 		body{
@@ -64,22 +65,26 @@
 		  /*_________________________________________*/
 		  $(window).scroll(function(){
 		  	if($(window).scrollTop() >= $(document).height() - $(window).height()){
+		  		$('#cargando').show();
 		  		 /*_____________________________________*/
 				$.ajax({
 				  	type: 'GET',
 				  	url: $('.pagination ul li.next a').attr('href'),
 				  	success: function(html){
 				  	 		//console.log(html);
-				  	        $('.pagination').remove();
 				  	 	var nuevosGastos = $(html).find('table tbody'),
 				  	 		nuevaPag     = $(html).find('.pagination'),
 				  	 		tabla        = $('table');
 				  	    tabla.find('tbody').append(nuevosGastos.html());
 				  	 	tabla.after(nuevaPag.hide());
+				  	 	$('#cargando').hide();
 				  	}
 				});
+				  $('.pagination').remove();
 		  	}
+
 		  });
+
 		  /*____________________________________________________-*/
 		   $('#IrInicio').click(function () {
 		       $('html, body').animate({
@@ -89,6 +94,7 @@
 		           $('#buscar').focus();
 		       //return false;
 		   });
+
 		  /*________________________________________*/
 		  $('#buscar').live('keyup',function(){
 		  	   var data = 'query='+$(this).val();
@@ -148,6 +154,26 @@
      		</div>
      	</form>
     </div>
+    <!--Aca va el codigo para eliminar-->
+    <div class="hide" id="deleteReg" title="Eliminar Concepto">
+	    	<form action="acciones.php" method="post">
+	    		<fieldset id="datosOcultos">
+	    			<input type="hidden" id="id_delete" name="id_delete" value="0"/>
+	    		</fieldset>
+	    		<div class="control-group">
+	    			<label for="activoElim" class="control-label">
+	    		    	<div class="alert alert-danger">
+	    		    		<strong>Esta seguro de Eliminar este Concepto</strong>
+	    		    	</div>
+	    		    </label>
+	    		    <div class="controls">
+	    		        <input type="hidden" name="deleteConcepto"/> 
+	    		        <button type="submit" class="btn btn-success">Aceptar</button>
+	    		        <button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button>
+	    		    </div>
+	    		</div>
+	    	</form>
+	    </div>
      
 	<article class="container well" id="fondo">
 			<input type="text" name="buscar" id="buscar" class="search-query" placeholder="buscar" autofocus>
@@ -173,6 +199,7 @@
 		    			?>
 		    		</tbody>
 		    	</table>
+		    	 <div id="cargando" style="display: none;"><img src="../img/loader.gif" alt=""></div>
 		    	 <div id="paginacion">
 		    	 	 <?php 
 		    	 	  require_once('funciones.php');
