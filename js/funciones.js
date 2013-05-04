@@ -21,8 +21,8 @@ $(document).ready(function(){
 		},
 		submitHandler: function(form){
 			///BUSCAMOS LOS CAMPOS EN TODAS LAS TABLAS-> cuando le den buscar
-		    var pet = $('.span3 form').attr('action');
-	      var met = $('.span3 form').attr('method');
+		    var pet = $('#internet form').attr('action');
+	      var met = $('#internet form').attr('method');
         console.log(pet);
         console.log(met);
 	         $.ajax({
@@ -31,13 +31,13 @@ $(document).ready(function(){
                    },
                    url: pet,
                    type: met,
-                   data: $('.span3 form').serialize(),
+                   data: $('#internet form').serialize(),
                    success: function(resp){
                    	   console.log(resp);
                        if(resp == "Error"){
                              setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
                              var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+'<br> No se Pudo registrar '+'</div>';
-                             $('.span3 .alert').remove();
+                             $('#mensaje .alert').remove();
                              $('#mensaje').html(error);
                        }else{
                           $('#resul').empty();//limpiar la tabla.
@@ -208,5 +208,58 @@ $(document).ready(function(){
                });
         }///cierre del submitHandler...
     });
+/*____________________________________________________________*/
+     $("#vitrinaInternet").validate({
+        rules:{
+           nombre:{
+            required: true
+            },
+            dinero:{
+            required: true,
+            number: true
+          }
+        },
+        submitHandler: function(form){
+          ///BUSCAMOS LOS CAMPOS EN TODAS LAS TABLAS-> cuando le den buscar
+            var pet = $('#vitrina form').attr('action');
+            var met = $('#vitrina form').attr('method');
+            console.log(pet);
+            console.log(met);
+               $.ajax({
+                       beforeSend: function(){
+
+                       },
+                       url: pet,
+                       type: met,
+                       data: $('#vitrina form').serialize(),
+                       success: function(resp){
+                           console.log(resp);
+                           if(resp == "Error"){
+                                 setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
+                                 var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Error'+'</strong>'+'<br> No se Pudo registrar '+'</div>';
+                                 $('#mensaje .alert').remove();
+                                 $('#mensaje').html(error);
+                           }else{
+                              $('#resulVitrina').empty();//limpiar la tabla.
+                              $('#resulVitrina').html(resp);//imprimir datos de la tabla.
+                              setTimeout(function(){ $("#mensaje .alert").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300);}, 800); 
+                              var exito = '<div class="alert alert-success">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Registro guardado '+'</strong>'+' el registro se agrego correctamente'+'</div>';
+                              $('#mensaje').html(exito);//impresion del mensaje exitoso.
+                              $('#vitrinaInternet')[0].reset();///limpiamos los campos del formulario.
+                              $('#foco').focus();///indicamos el foco al primer valor del formulario. 
+                           }
+                       },
+                       error: function(jqXHR,estado,error){
+                           console.log(estado);
+                           console.log(error);
+                       },
+                       complete: function(jqXHR,estado){
+                           console.log(estado);
+                       },
+                       timeout: 10000//10 segundos.
+                   });
+        }//cierre del submitHandler
+      });
+
 
 });//cierre del document...

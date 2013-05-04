@@ -30,6 +30,9 @@
 		#fondo{
 			background: #feffff;
 		}
+		#resulVitrina{
+			margin-left: 6%;
+		}
         .hero-unit{
         	margin-top: 30px;
         	text-align: center;
@@ -154,9 +157,34 @@
 			<div class="span7"><aside id="mensaje"></aside></div>
 		</div>
 		<div class="row">
-			<!--FORMULARIO PARA LA VITRINA-->
-			<div class="span3 well">
-				<form action="acciones.php" method="post" id="validate2" class="limpiar">
+			<!--FORMULARIO PARA INTERNET NORMAL-->
+			<div class="span3 well" id="internet">
+			    <form action="acciones.php" method="post" id="validate2" class="limpiar">
+					<div class="control-group">
+						<h1>Internet</h1>
+		    			<label for="nombre" class="control-label">concepto</label>
+		    			<div class="controls">
+		    			   <input  type="text" name="nombre" id="foco" required>
+		    			</div>
+		    		</div>
+		    		<div class="control-group">
+		    			<label for="clave" class="control-label">Dinero</label>
+		    			<div class="controls">
+		    				<input type="text" name="dinero" required>
+		    			</div>
+	    			</div>
+	    			<input type="hidden" name="tipoConcep" value="internet">
+	    			<div class="control-group">
+	    				<div class="controls">
+	    				   <button id="boton" name="guardarInternet" class="btn btn-success">Guardar</button>
+	    				</div>
+	    			</div>
+			    </form>
+		    </div>
+		    <div class="span2"></div>
+		    	<!--FORMULARIO PARA LA VITRINA-->
+			<div class="span3 well" id="vitrina">
+				<form action="acciones.php" method="post" id="vitrinaInternet" class="limpiar">
 					<div class="control-group">
 						<h1>Vitrina</h1>
 				    	<label for="nombre" class="control-label">Concepto</label>
@@ -178,48 +206,22 @@
 			    	</div>
 				</form>                 
 			</div>
-			<div class="span2"></div>
-			<!--FORMULARIO PARA INTERNET NORMAL-->
-			<div class="span3 well">
-			    <form action="acciones.php" method="post" id="validate2" class="limpiar">
-					<div class="control-group">
-						<h1>Internet</h1>
-		    			<label for="nombre" class="control-label">concepto</label>
-		    			<div class="controls">
-		    			   <input  type="text" name="nombre" id="foco" required>
-		    			</div>
-		    		</div>
-		    		<div class="control-group">
-		    			<label for="clave" class="control-label">Dinero</label>
-		    			<div class="controls">
-		    				<input type="text" name="dinero" required>
-		    			</div>
-	    			</div>
-	    			<input type="hidden" name="tipoConcep" value="internet">
-	    			<div class="control-group">
-	    				<div class="controls">
-	    					 <input type="hidden" name="guardar">
-	    				   <button id="boton" name="guardar" class="btn btn-success">Guardar</button>
-	    				</div>
-	    			</div>
-			    </form>
-		    </div>
 		</div>
 		    
 		<div class="row">
-			<div class="span4">
-				<?php
-				   require_once('funciones.php');
-				   $objeto = new funciones();
-				   $objeto->totalDiaVitrina();
-				?>
-			</div>
-			<div class="span1"></div>
 			<div class="span4" id="resul">
 				<?php
 				   require_once('funciones.php');
 				   $objeto = new funciones();
 				   $objeto->totalDiaInternet();
+				?>
+			</div>
+			 <div class="span1"></div> 
+			<div class="span4" id="resulVitrina">
+				<?php
+				   require_once('funciones.php');
+				   $objeto = new funciones();
+				   $objeto->totalDiaVitrina();
 				?>
 			</div>
 		</div>

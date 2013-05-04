@@ -24,17 +24,13 @@
         header('Location: internet.php');
    }
 
-   if(isset($_POST['guardar'])){
+   if(isset($_POST['guardarInternet'])){
         $nombre = $_POST['nombre'];
         $dinero = $_POST['dinero'];
         $tipoConcep = $_POST['tipoConcep'];
-        if($nombre=='' and $dinero==''){
-           echo "Error";
-        }else{
-           $objeto->registrarConcepto($nombre,$dinero,$tipoConcep);
-           $objeto->totalDiaInternet();
-        }
-        //header('Location: internet.php');
+        
+        $objeto->registrarConcepto($nombre,$dinero,$tipoConcep);
+        $objeto->totalDiaInternet();
    }
 
    if(isset($_POST['okRecar'])){

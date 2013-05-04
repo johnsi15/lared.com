@@ -159,8 +159,8 @@
 		</div>
 		<div class="row">
 			<div class="span4"></div>
-			<div class="span3 well">
-				<form action="acciones.php" method="post" id="validate2"class="limpiar">
+			<div class="span3 well" id="vitrina">
+				<form action="acciones.php" method="post" id="vitrinaInternet"class="limpiar">
 						<div class="control-group">
 			    			<label for="nombre" class="control-label">Concepto</label>
 			    			<div class="controls">
@@ -184,7 +184,7 @@
 		</div>
 		<div class="row">
 			<div class="span3"></div>
-			<div class="span4" id="resul">
+			<div class="span4" id="resulVitrina">
 				<?php
 				   require_once('funciones.php');
 				   $objeto = new funciones();
