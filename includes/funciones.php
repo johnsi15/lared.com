@@ -124,11 +124,13 @@
         $totalInternet = $fila['total'];
 
         if($fila['total']!=0) {
-            $salida = '<h3 class="well"> Total del Dia: $'.number_format($fila['total']).'</h3>';
+            $salida = '<h3 class="well"> Total del Dia: $'.number_format($fila['total']).'</h3>
+                       <a href="verInternet.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a>';
             echo $salida;
         }else{
             $totalInternet=0;
-            $salida = '<h3 class="well"> Total del Dia: $0</h3>';
+            $salida = '<h3 class="well"> Total del Dia: $0</h3>
+                       <a href="verInternet.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a>';
             echo $salida;
         }
 
@@ -227,11 +229,13 @@
         $totalVitrina = $fila['total'];
 
         if($fila['total']!=0){
-            $salida = '<h3 class="well"> Total del Dia: $'.number_format($fila['total']).'</h3>';
+            $salida = '<h3 class="well"> Total del Dia: $'.number_format($fila['total']).'</h3>
+                        <a href="verVitrina.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a>';
             echo $salida;
         }else{
             $totalVitrina=0;
-            $salida = '<h3 class="well"> Total del Dia: $0</h3>';
+            $salida = '<h3 class="well"> Total del Dia: $0</h3>
+                        <a href="verVitrina.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a>';
             echo $salida;
         }
 
@@ -887,7 +891,48 @@
     //BUSCADOR EN TIEMPO REAL POR  DE CONCEPTO......
     public function buscarConcepto($palabra){
         if($palabra == ''){
-            //$resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cinternet");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+
+            echo '<div class="pagination" style="display: none;">
+                    ';
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                
+                echo "<ul><li class='next'> <a href='reporteConcepto.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;echo '
+                   </div>';
+
+            $resultado = mysql_query("SELECT * FROM cinternet ORDER BY tipoConcepto,fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            } 
         }else{
              $resultado = mysql_query("SELECT * FROM cinternet WHERE nombre LIKE'%$palabra%' OR tipoConcepto LIKE '%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
             //echo json_encode($resultado);
@@ -898,6 +943,7 @@
                         <td>'.$fila['tipoConcepto'].'</td>
                         <td>'.$fila['fecha'].'</td>
                         <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
                     </tr>';
                               // echo $salida;
                     echo $salida;
@@ -921,6 +967,254 @@
 
     public function deleteGasto($cod){
         mysql_query("DELETE FROM gastos WHERE id='$cod'");
+    }
+    /*_______________________________________________________________*/
+    public function verInternet(){
+        $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='internet' ORDER BY fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        
+            while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                             <td>'.$fila['nombre'].'</td>
+                             <td>'.$fila['dinero'].'</td>
+                             <td>'.$fila['tipoConcepto'].'</td>
+                             <td>'.$fila['fecha'].'</td>
+                             <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                             <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                           </tr>';
+                          // echo $salida;
+            }      
+    }
+
+    public function paginacionInternet(){
+        $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cinternet");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+
+            echo '<div class="pagination" style="display: none;">
+                    ';
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                
+                echo "<ul><li class='next'> <a href='verInternet.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;echo '
+                   </div>';
+    }
+
+    public function buscarInternet($palabra){
+        if($palabra == ''){
+            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cinternet");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+
+            echo '<div class="pagination" style="display: none;">
+                    ';
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                
+                echo "<ul><li class='next'> <a href='verInternet.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;echo '
+                   </div>';
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='internet' ORDER BY fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+             //echo json_encode($resultado);
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            }  
+        }else{
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='internet' AND nombre LIKE'%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
+            //echo json_encode($resultado);
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            }  
+        }
+    }
+
+    public function verVitrina(){
+        $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='vitrina' ORDER BY fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+        
+            while($fila = mysql_fetch_array($resultado)){
+                echo '<tr> 
+                             <td>'.$fila['nombre'].'</td>
+                             <td>'.$fila['dinero'].'</td>
+                             <td>'.$fila['tipoConcepto'].'</td>
+                             <td>'.$fila['fecha'].'</td>
+                             <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                             <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                           </tr>';
+                          // echo $salida;
+            }      
+    }
+
+    public function paginacionVitrina(){
+         $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cinternet");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+
+            echo '<div class="pagination" style="display: none;">
+                    ';
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                
+                echo "<ul><li class='next'> <a href='verVitrina.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;echo '
+                   </div>';
+    }
+
+    public function buscarVitrina($palabra){
+        if($palabra == ''){
+            $cant_reg = 30;//definimos la cantidad de datos que deseamos tenes por pagina.
+            if(isset($_GET["pagina"])){
+                $num_pag = $_GET["pagina"];//numero de la pagina
+            }else{
+                $num_pag = 1;
+            }
+
+            if(!$num_pag){//preguntamos si hay algun valor en $num_pag.
+                $inicio = 0;
+                $num_pag = 1;
+
+            }else{//se activara si la variable $num_pag ha resivido un valor oasea se encuentra en la pagina 2 o ha si susecivamente 
+                $inicio = ($num_pag-1)*$cant_reg;//si la pagina seleccionada es la numero 2 entonces 2-1 es = 1 por 10 = 10 empiesa a contar desde la 10 para la pagina 2 ok.
+            }
+
+            $result = mysql_query("SELECT * FROM cinternet");///hacemos una consulta de todos los datos de cinternet
+           
+            $total_registros=mysql_num_rows($result);//obtenesmos el numero de datos que nos devuelve la consulta
+
+            $total_paginas = ceil($total_registros/$cant_reg);
+
+            echo '<div class="pagination" style="display: none;">
+                    ';
+            if(($num_pag+1)<=$total_paginas){//preguntamos si el numero de la pagina es menor o = al total de paginas para que aparesca el siguiente
+                
+                echo "<ul><li class='next'> <a href='verVitrina.php?pagina=".($num_pag+1)."'> Next </a></li></ul>";
+            } ;echo '
+                   </div>';
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='vitrina' ORDER BY fecha DESC LIMIT $inicio,$cant_reg");//obtenemos los datos ordenados limitado con la variable inicio hasta la variable cant_reg
+             //echo json_encode($resultado);
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            }  
+        }else{
+            $resultado = mysql_query("SELECT * FROM cinternet WHERE tipoConcepto='vitrina' AND nombre LIKE'%$palabra%' OR fecha LIKE '%$palabra%' ORDER BY fecha DESC");
+            //echo json_encode($resultado);
+            while($fila = mysql_fetch_array($resultado)){
+                   $salida = '<tr> 
+                        <td>'.$fila['nombre'].'</td>
+                        <td>'.$fila['dinero'].'</td>
+                        <td>'.$fila['tipoConcepto'].'</td>
+                        <td>'.$fila['fecha'].'</td>
+                        <td><a id="edit" class="btn btn-mini btn-info" href="'.$fila['id'].'"><strong>Editar</strong></a></td>
+                        <td><a id="delete" class="btn btn-mini btn-danger" href="'.$fila['id'].'"><strong>Eliminar</strong></a></td>
+                    </tr>';
+                              // echo $salida;
+                    echo $salida;
+            }  
+        }
     }
 
   }//cierre de la clase

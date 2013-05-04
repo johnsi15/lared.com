@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>reportePorConcepto</title>
+	<title>VitrinaConcepto</title>
 	<link rel="stylesheet" href="../css/bootstrap.css">
 	<link rel="stylesheet" href="../css/smoothness/jquery-ui.css">
 	<!-- <link rel="stylesheet" href="../css/estilos.css"> -->
@@ -99,25 +99,23 @@
 
 		  /*________________________________________*/
 		  $('#buscar').live('keyup',function(){
-		  	   var data = 'query='+$(this).val();
-		  	     console.log(data);
-      	       if(data =='query=' ){
-      	       	  $.post('acciones.php',data , function(resp){
+		  	   var data = 'buscarVitrina='+$(this).val();
+		  	     //console.log(data);
+      	       if(data =='buscarVitrina='){
+      	       	   $.post('acciones.php',data , function(resp){
 			  	   	  //console.log(resp);
 			  	   	  $('#result').empty();//limpiar los datos
 			  	   	  $('#result').html(resp);
 	      	    	  console.log('poraca paso joder....');
-			  	   },'html');
+			  	   },'text');
       	       }else{
-      	       	   $.post('acciones.php',data , function(resp){
+      	       	  $.post('acciones.php',data , function(resp){
 			  	   	  //console.log(resp);
 			  	   	  $('.pagination').remove();
 			  	   	  $('#result').empty();//limpiar los datos
-			  	   	  $('#result').html(resp);
-	      	    	  console.log(resp);
-			  	   },'html');
+	      	    	  $('#result').html(resp);//mandamos los nuevos datos..
+			  	   },'text');
       	       }
-		  	  
 		  });
 
 	  });//cierre del document...
@@ -190,7 +188,7 @@
 	<article class="container well" id="fondo">
 			<input type="text" name="buscar" id="buscar" class="search-query" placeholder="buscar" autofocus>
 		<div class="row">
-			<aside><h1>Reporte Por Concepto</h1></aside><br><br>
+			<aside><h1>Vitrina Por Concepto</h1></aside><br><br>
 			<div class="span2"> <div id="bloque"><aside class="well" id="bloque-contenedor" style="text-align: center;"><a href="#" id="IrInicio">LaRed.Com</a></aside></div></div> 
 		    <div class="span8">
 		    	<div class="mensaje"></div>
@@ -207,7 +205,7 @@
 		    			<?php 
 		    			     require_once('funciones.php');
 		    	 			 $objeto = new funciones();
-         			 		 $objeto->buscarReporteConcepto();
+         			 		 $objeto->verVitrina();
 		    			?>
 		    		</tbody>
 		    	</table>
@@ -216,7 +214,7 @@
 		    	 	 <?php 
 		    	 	  require_once('funciones.php');
 		    	 	  $objeto = new funciones();
-		    	 	  $objeto->paginacion();
+		    	 	  $objeto->paginacionVitrina();
 			    	 ?>
 		    	 </div>
 		    </div>

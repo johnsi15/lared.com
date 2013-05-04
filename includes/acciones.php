@@ -217,6 +217,16 @@
        $objeto->buscarConcepto($palabra);
    }
 
+   if(isset($_POST['buscarInternet'])){
+       $palabra = $_POST['buscarInternet'];
+       $objeto->buscarInternet($palabra);
+   }
+
+   if(isset($_POST['buscarVitrina'])){
+       $palabra = $_POST['buscarVitrina'];
+       $objeto->buscarVitrina($palabra);
+   }
+
    /*___________________________________________*/
    //Eliminar
    if(isset($_POST['deleteConcepto'])){

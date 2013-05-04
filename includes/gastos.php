@@ -88,8 +88,6 @@
 				  	 	}
 				  	});
 				  	   $('.pagination').remove();//removemos la clase paginacion para que no me vuelva a cargar datos repetidos
-			    }else{
-			  	    //$('#hide').hide(); para escoder el boton ya no es necesario con el scroll
 			    } 		
 			}
 		  

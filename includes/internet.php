@@ -215,6 +215,7 @@
 				   $objeto = new funciones();
 				   $objeto->totalDiaInternet();
 				?>
+				<!-- <a href="verInternet.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a> -->
 			</div>
 			 <div class="span1"></div> 
 			<div class="span4" id="resulVitrina">
@@ -223,6 +224,7 @@
 				   $objeto = new funciones();
 				   $objeto->totalDiaVitrina();
 				?>
+				<!-- <a href="verVitrina.php" class="btn btn-inverse btn-large" target="_blank">Ver Por Concepto</a> -->
 			</div>
 		</div>
 	</article>
