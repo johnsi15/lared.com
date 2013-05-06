@@ -56,11 +56,11 @@
     <article class="container well" id="fondo">
     	<div class="row">
     		<div class="span5"><br><br>
-    			<form  action="includes/acciones.php" method="post" class="well">
+    			<form  action="includes/acciones.php" method="post" class="well" id="limpiar">
 		    		<div class="control-group" id="form">
 		    			<label for="nombre" class="control-label">Nombre</label>
 		    			<div class="controls">
-		    			   <input type="text" name="nombre"  class="respon" placeholder="Usuario">
+		    			   <input type="text" name="nombre"  class="respon" id="foco" placeholder="Usuario" autofocus>
 		    			</div>
 		    		</div>
 		    		<div class="control-group" id="form">

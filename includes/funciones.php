@@ -10,7 +10,8 @@
 
     public function login($user,$pass){
          session_start();
-         $resultado = mysql_query("SELECT * FROM usuarios WHERE nombre='$user' AND clave='$pass'");
+         $truco=sha1($pass);
+         $resultado = mysql_query("SELECT * FROM usuarios WHERE nombre='$user' AND clave='$truco'");
          $fila = mysql_fetch_array($resultado);
          if($fila>0){
          	$id_user=$fila['id'];
@@ -1215,6 +1216,43 @@
                     echo $salida;
             }  
         }
+    }
+    /*MODIFICAR DATOS DEL USUAIRO Y CREAR....*/
+    public function editarNombreUser($nom,$cod){
+        $nom = strtolower($nom);
+        mysql_query("UPDATE usuarios SET nombre='$nom' WHERE id='$cod'") or die('problemas en el update de nombre'.mysql_error());
+        session_start();
+         if($_SESSION['id_user']){
+             session_destroy();
+         }
+        $resultado=mysql_query("SELECT * FROM usuarios WHERE id='$cod'")
+              or die('Problemas en el select de nombre usuarios'.mysql_error());
+        $row=mysql_fetch_array($resultado);
+        echo $row['nombre'];
+        /*_______________________________*/
+        session_start();
+        $id_user=$row['id'];
+        $user = $row['nombre'];
+        $_SESSION['id_user']=$id_user;
+        $_SESSION['nombre'] = $user;
+    }
+
+    public function cambiarClave($conA,$conN,$cod){
+        $resultado = mysql_query("SELECT clave FROM usuarios WHERE clave='$conA'");
+        
+        if($row = mysql_fetch_array($resultado)){
+            echo "Bien";
+            $hash=sha1($conN);//incriptamos la contraseña
+            mysql_query("UPDATE usuarios SET clave='$hash' WHERE clave='$conA'");
+        }else{
+            echo "Error";
+        }
+    }
+
+    public function registrarUser($nom,$pass){
+        $hash=sha1($pass);
+         mysql_query("INSERT INTO usuarios (nombre,clave) VALUES ('$nom','$hash')") 
+                       or die ("Error"); 
     }
 
   }//cierre de la clase

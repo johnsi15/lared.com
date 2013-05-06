@@ -21,6 +21,8 @@ $(document).ready(function(){
                              var error = '<div class="alert alert-error">'+'<button type="button" class="close" data-dismiss="alert">'+'X'+'</button>'+'<strong>'+'Nombre o Contraseña Incorrecta'+'</strong>'+'<br> Intente Nuevamente '+'</div>';
                              $('.span5 .alert').remove();
                              $('#mensaje').html(error);
+                             $('#limpiar')[0].reset();///limpiamos los campos del formulario.
+                             $('#foco').focus();
                        }else{
                             self.location = "menu.php";
                        }

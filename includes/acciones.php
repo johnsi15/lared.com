@@ -255,5 +255,24 @@
      $objeto->paginacionGastos();
      $objeto->verGastos();
    }
+   /*MODIFICAR DATOS DEL USURIOO Y CREAR USUARIO*/
+   if(isset($_POST['editNomUser'])){
+     $nom = $_POST['nombre'];
+     $cod = $_POST['id_registro'];
+     $objeto->editarNombreUser($nom,$cod);
+   }
+
+   if(isset($_POST['UserModificarContra'])){
+     $conA = $_POST['contraseñaA'];
+     $conN = $_POST['contraseñaN'];
+     $cod = $_POST['id_registro'];
+     $objeto->cambiarClave($conA,$conN,$cod);
+   }
+
+   if(isset($_POST['registrarUser'])){
+      $nom = $_POST['nombre'];
+      $clave = $_POST['contraseña'];
+      $objeto->registrarUser($nom,$clave);
+   }
 
 ?>

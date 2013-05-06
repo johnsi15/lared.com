@@ -145,6 +145,9 @@
 								    <span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
+									<li><a href="includes/registrarUsuario.php"><i class="icon-plus-sign"></i> Registrar Usuario</a></li>
+									<li><a href="includes/editarUsuario.php"><i class="icon-wrench"></i> Configuración de la cuenta</a></li>
+									<li class="divider"></li>
 									<li><a href="includes/cerrar.php">Cerrar Sesion</a></li>
 								</ul>
 							</li>
